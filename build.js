@@ -1,3 +1,4 @@
+// Design Token Build System - Updated for GitHub Pages deployment
 const StyleDictionary = require('style-dictionary');
 const fs = require('fs');
 const path = require('path');

@@ -35,22 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Auto-sync and build
-        run: |
-          echo "🔍 Checking for token changes..."
-          
-          # If figma-tokens.json exists and has content, sync from Figma
-          if [ -f "figma-tokens.json" ] && [ -s "figma-tokens.json" ]; then
-            echo "🎨 Found Figma tokens, converting to Style Dictionary..."
-            npm run sync:from-figma
-          else
-            echo "🔧 Using existing Style Dictionary tokens..."
-            npm run build
-          fi
-          
-          echo "📁 Checking build output:"
-          ls -la dist/ || echo "❌ dist folder not created"
-          find . -name "*-converted.json" || echo "❌ No converted files found"
+      - name: Sync tokens from Figma format
+         run: npm run sync:from-figma
+            
+       - name: Check build output
+         run: |
+           echo "📁 Checking build output:"
+           ls -la dist/ || echo "dist/ folder not found"
+           find . -name "*-converted.json" || echo "No converted files found"
       
       - name: Commit generated files
         run: |

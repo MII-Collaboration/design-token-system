@@ -2179,7 +2179,7 @@
       "$type": "textCase",
       "$value": "capitalize"
     },
-    "telkomse-batik-sans": {
+    "telkomsel-batik-sans": {
       "$type": "fontFamilies",
       "$value": "Telkomsel Batik Sans"
     },

@@ -38,36 +38,71 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
   
   console.log('🔍 Found token set with keys:', Object.keys(tokenSet));
   
+  // Helper function to normalize token names (replace spaces with dashes)
+  function normalizeTokenName(name) {
+    return name.replace(/\s+/g, '-').toLowerCase();
+  }
+  
+  // Helper function to fix token references in values
+  function fixTokenReferences(value, rootPath = []) {
+    if (typeof value === 'string' && value.includes('{') && value.includes('}')) {
+      // Handle token references like {Primitives Color.neutral.1}
+      return value.replace(/\{([^}]+)\}/g, (match, reference) => {
+        // Split reference by dots and normalize each part
+        const parts = reference.split('.');
+        const normalizedParts = parts.map(part => {
+          // If part contains spaces, normalize it
+          if (part.includes(' ')) {
+            return normalizeTokenName(part);
+          }
+          return part;
+        });
+        
+        // Reconstruct the reference with root path (global.v2)
+        const fullPath = rootPath.concat(normalizedParts).join('.');
+        return `{${fullPath}}`;
+      });
+    }
+    return value;
+  }
+  
   // Recursive function to process tokens
-  function processTokens(obj, result = {}) {
+  function processTokens(obj, result = {}, currentPath = []) {
     for (const [key, value] of Object.entries(obj)) {
       // Skip metadata keys
       if (key.startsWith('$')) {
         continue;
       }
       
+      // Normalize key name (replace spaces with dashes)
+      const normalizedKey = normalizeTokenName(key);
+      const newPath = [...currentPath, normalizedKey];
+      
       if (value && typeof value === 'object' && (value.value !== undefined || value.$value !== undefined)) {
         // This is a token with a value (support both W3C DTCG $value and Token Studio value)
-        const tokenValue = value.$value || value.value;
+        let tokenValue = value.$value || value.value;
         const tokenType = value.$type || value.type;
         
-        console.log(`📝 Processing token: ${key} = ${tokenValue} (type: ${tokenType})`);
+        // Fix token references in the value
+        tokenValue = fixTokenReferences(tokenValue, ['global', 'v2']); // Use root path for references
         
-        result[key] = {
+        console.log(`📝 Processing token: ${normalizedKey} = ${tokenValue} (type: ${tokenType})`);
+        
+        result[normalizedKey] = {
           value: convertValue(tokenValue, tokenType),
           type: convertType(tokenType)
         };
         
         // Preserve description if it exists
         if (value.description || value.$description) {
-          result[key].description = value.description || value.$description;
+          result[normalizedKey].description = value.description || value.$description;
         }
         
       } else if (value && typeof value === 'object') {
         // This is a nested group
-        console.log(`📁 Processing group: ${key}`);
-        result[key] = {};
-        processTokens(value, result[key]);
+        console.log(`📁 Processing group: ${normalizedKey}`);
+        result[normalizedKey] = {};
+        processTokens(value, result[normalizedKey], newPath);
       }
     }
     return result;
@@ -197,9 +232,11 @@ async function syncTokens(direction = 'figma-to-style') {
           try {
             const content = JSON.parse(fs.readFileSync(path.join(tokensDir, file), 'utf8'));
             // Check if it's already in Style Dictionary format (has .value and .type)
+            // Don't confuse W3C DTCG format ($value, $type) with Style Dictionary format
             const hasStyleDictionaryFormat = Object.values(content).some(item => 
               typeof item === 'object' && item !== null && 
-              (item.value !== undefined || item.type !== undefined)
+              (item.value !== undefined || item.type !== undefined) &&
+              (item.$value === undefined && item.$type === undefined)
             );
             // Only process if it's NOT in Style Dictionary format (i.e., it's a Figma tokens file)
             return !hasStyleDictionaryFormat;
@@ -237,9 +274,17 @@ async function syncTokens(direction = 'figma-to-style') {
           
           // Write converted file with original name prefix
           const outputPath = path.join(tokensDir, `${fileName}-converted.json`);
+          console.log(`📝 Writing to: ${outputPath}`);
+          console.log(`📊 Token count: ${Object.keys(styleDictionaryTokens).length}`);
+          
           fs.writeFileSync(outputPath, JSON.stringify(styleDictionaryTokens, null, 2));
           
-          console.log(`✅ Converted ${jsonFile} saved to ${fileName}-converted.json`);
+          // Verify file was written
+          if (fs.existsSync(outputPath)) {
+            console.log(`✅ Converted ${jsonFile} saved to ${fileName}-converted.json`);
+          } else {
+            console.log(`❌ Failed to write ${fileName}-converted.json`);
+          }
           
         } catch (error) {
           console.error(`❌ Error processing ${jsonFile}:`, error.message);

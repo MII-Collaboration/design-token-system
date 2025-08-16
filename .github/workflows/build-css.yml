@@ -47,6 +47,10 @@ jobs:
             echo "🔧 Using existing Style Dictionary tokens..."
             npm run build
           fi
+          
+          echo "📁 Checking build output:"
+          ls -la dist/ || echo "❌ dist folder not created"
+          find . -name "*-converted.json" || echo "❌ No converted files found"
       
       - name: Commit generated files
         run: |

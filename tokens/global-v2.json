@@ -4,10 +4,7 @@
       "v2": {
         "Primitives Color": {
           "red": {
-            "lightest": {
-              "$type": "color", 
-              "$value": "#ffe5e9"
-            },
+
             "lighter": {
               "$type": "color",
               "$value": "#ff99a5"

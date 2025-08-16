@@ -56,7 +56,10 @@ jobs:
           # Check if there are changes
           if ! git diff --quiet; then
             git add dist/
-            git add tokens/*-converted.json
+            # Only add converted token files if they exist
+            if ls tokens/*-converted.json 1> /dev/null 2>&1; then
+              git add tokens/*-converted.json
+            fi
             git commit -m "🤖 Auto-generate CSS from tokens" || exit 0
             git push
             echo "✅ CSS files updated and committed"

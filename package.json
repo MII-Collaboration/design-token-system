@@ -1,0 +1,21 @@
+{
+  "name": "custom-design-tokens",
+  "version": "1.0.0",
+  "description": "Custom Design Token System using Style Dictionary",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js",
+    "build:basic": "style-dictionary build",
+    "clean": "rm -rf dist/",
+    "build:clean": "npm run clean && npm run build",
+    "dev": "npm run build && open demo.html",
+    "sync:from-figma": "node sync-tokens.js figma-to-style && npm run build",
+    "sync:to-figma": "node sync-tokens.js style-to-figma"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "style-dictionary": "^3.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

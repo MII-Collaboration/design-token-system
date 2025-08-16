@@ -1,0 +1,49 @@
+{
+  "$description": "Basic color tokens for design system - updated",
+  "global": {
+    "primary": {
+      "$type": "color",
+      "$value": "#FF0025"
+    },
+    "secondary": {
+      "$type": "color", 
+      "$value": "#001A41"
+    },
+    "white": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "black": {
+      "$type": "color",
+      "$value": "#000000"
+    },
+    "gray": {
+      "50": {
+        "$type": "color",
+        "$value": "#F9FAFB"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#F3F4F6"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#E5E7EB"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#6B7280"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#111827"
+      }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": [
+      "global"
+    ]
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "global": {
+    "spacing": {
+      "xs": {
+        "$type": "spacing",
+        "$value": "4"
+      },
+      "sm": {
+        "$type": "spacing", 
+        "$value": "8"
+      },
+      "md": {
+        "$type": "spacing",
+        "$value": "16"
+      },
+      "lg": {
+        "$type": "spacing",
+        "$value": "24"
+      },
+      "xl": {
+        "$type": "spacing",
+        "$value": "32"
+      },
+      "2xl": {
+        "$type": "spacing",
+        "$value": "48"
+      }
+    },
+    "borderRadius": {
+      "none": {
+        "$type": "borderRadius",
+        "$value": "0"
+      },
+      "sm": {
+        "$type": "borderRadius",
+        "$value": "4"
+      },
+      "md": {
+        "$type": "borderRadius",
+        "$value": "8"
+      },
+      "lg": {
+        "$type": "borderRadius",
+        "$value": "12"
+      },
+      "full": {
+        "$type": "borderRadius",
+        "$value": "9999"
+      }
+    }
+  },
+  "$themes": [],
+  "$metadata": {
+    "tokenSetOrder": [
+      "global"
+    ]
+  }
+}

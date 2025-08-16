@@ -1,0 +1,40 @@
+{
+  "primary": {
+    "value": "#FF0025",
+    "type": "color"
+  },
+  "secondary": {
+    "value": "#001A41",
+    "type": "color"
+  },
+  "white": {
+    "value": "#FFFFFF",
+    "type": "color"
+  },
+  "black": {
+    "value": "#000000",
+    "type": "color"
+  },
+  "gray": {
+    "50": {
+      "value": "#F9FAFB",
+      "type": "color"
+    },
+    "100": {
+      "value": "#F3F4F6",
+      "type": "color"
+    },
+    "200": {
+      "value": "#E5E7EB",
+      "type": "color"
+    },
+    "500": {
+      "value": "#6B7280",
+      "type": "color"
+    },
+    "900": {
+      "value": "#111827",
+      "type": "color"
+    }
+  }
+}

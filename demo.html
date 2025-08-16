@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Token System Demo</title>
+    <link rel="stylesheet" href="dist/css/variables.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: var(--lineHeight-normal);
+            background-color: var(--color-neutral-gray-50);
+            color: var(--color-neutral-gray-800);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .title {
+            font-size: var(--fontSize-4xl);
+            font-weight: var(--fontWeight-bold);
+            color: var(--color-brand-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .subtitle {
+            font-size: var(--fontSize-lg);
+            color: var(--color-neutral-gray-600);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .card {
+            background: var(--color-neutral-white);
+            border-radius: var(--borderradius-lg);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
+            border: var(--borderWidth-thin) solid var(--color-neutral-gray-200);
+        }
+
+        .card-title {
+            font-size: var(--fontSize-xl);
+            font-weight: var(--fontWeight-semibold);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-neutral-gray-800);
+        }
+
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--borderradius-md);
+            border: var(--borderWidth-thin) solid var(--color-neutral-gray-300);
+            position: relative;
+        }
+
+        .color-swatch::after {
+            content: attr(data-color);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--fontSize-xs);
+            color: var(--color-neutral-gray-600);
+            white-space: nowrap;
+        }
+
+        .spacing-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .spacing-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .spacing-box {
+            background: var(--color-brand-primary);
+            height: 20px;
+            border-radius: var(--borderradius-sm);
+        }
+
+        .typography-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .font-sample {
+            border-bottom: var(--borderWidth-thin) solid var(--color-neutral-gray-200);
+            padding-bottom: var(--spacing-sm);
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--borderradius-md);
+            font-size: var(--fontSize-base);
+            font-weight: var(--fontWeight-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--color-brand-primary);
+            color: var(--color-neutral-white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-brand-secondary);
+        }
+
+        .btn-secondary {
+            background-color: var(--color-neutral-gray-200);
+            color: var(--color-neutral-gray-800);
+        }
+
+        .btn-success {
+            background-color: var(--color-brand-success);
+            color: var(--color-neutral-white);
+        }
+
+        .btn-danger {
+            background-color: var(--color-brand-danger);
+            color: var(--color-neutral-white);
+        }
+
+        .shadow-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .shadow-item {
+            background: var(--color-neutral-white);
+            padding: var(--spacing-lg);
+            border-radius: var(--borderradius-md);
+            text-align: center;
+            font-size: var(--fontSize-sm);
+            color: var(--color-neutral-gray-600);
+        }
+
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-base { box-shadow: var(--shadow-base); }
+        .shadow-md { box-shadow: var(--shadow-md); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        .shadow-xl { box-shadow: var(--shadow-xl); }
+
+        .code {
+            background: var(--color-neutral-gray-100);
+            padding: var(--spacing-xs);
+            border-radius: var(--borderradius-sm);
+            font-family: 'Courier New', monospace;
+            font-size: var(--fontSize-sm);
+            color: var(--color-neutral-gray-700);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="title">🎨 Design Token System</h1>
+            <p class="subtitle">A comprehensive design token system built with Style Dictionary</p>
+        </header>
+
+        <div class="grid">
+            <!-- Colors -->
+            <div class="card">
+                <h2 class="card-title">Brand Colors</h2>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: var(--color-brand-primary)" data-color="primary"></div>
+                    <div class="color-swatch" style="background: var(--color-brand-secondary)" data-color="secondary"></div>
+                    <div class="color-swatch" style="background: var(--color-brand-success)" data-color="success"></div>
+                    <div class="color-swatch" style="background: var(--color-brand-danger)" data-color="danger"></div>
+                    <div class="color-swatch" style="background: var(--color-brand-warning)" data-color="warning"></div>
+                    <div class="color-swatch" style="background: var(--color-brand-info)" data-color="info"></div>
+                </div>
+                <p>Usage: <span class="code">var(--color-brand-primary)</span></p>
+            </div>
+
+            <!-- Gray Scale -->
+            <div class="card">
+                <h2 class="card-title">Gray Scale</h2>
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: var(--color-neutral-gray-100)" data-color="100"></div>
+                    <div class="color-swatch" style="background: var(--color-neutral-gray-300)" data-color="300"></div>
+                    <div class="color-swatch" style="background: var(--color-neutral-gray-500)" data-color="500"></div>
+                    <div class="color-swatch" style="background: var(--color-neutral-gray-700)" data-color="700"></div>
+                    <div class="color-swatch" style="background: var(--color-neutral-gray-900)" data-color="900"></div>
+                </div>
+                <p>Usage: <span class="code">var(--color-neutral-gray-500)</span></p>
+            </div>
+
+            <!-- Spacing -->
+            <div class="card">
+                <h2 class="card-title">Spacing Scale</h2>
+                <div class="spacing-demo">
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: var(--spacing-xs)"></div>
+                        <span>xs (4px)</span>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: var(--spacing-sm)"></div>
+                        <span>sm (8px)</span>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: var(--spacing-md)"></div>
+                        <span>md (16px)</span>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: var(--spacing-lg)"></div>
+                        <span>lg (24px)</span>
+                    </div>
+                    <div class="spacing-item">
+                        <div class="spacing-box" style="width: var(--spacing-xl)"></div>
+                        <span>xl (32px)</span>
+                    </div>
+                </div>
+                <p>Usage: <span class="code">padding: var(--spacing-md)</span></p>
+            </div>
+
+            <!-- Typography -->
+            <div class="card">
+                <h2 class="card-title">Typography</h2>
+                <div class="typography-demo">
+                    <div class="font-sample" style="font-size: var(--fontSize-6xl); font-weight: var(--fontWeight-bold);">6xl Bold</div>
+                    <div class="font-sample" style="font-size: var(--fontSize-4xl); font-weight: var(--fontWeight-semibold);">4xl Semibold</div>
+                    <div class="font-sample" style="font-size: var(--fontSize-2xl); font-weight: var(--fontWeight-medium);">2xl Medium</div>
+                    <div class="font-sample" style="font-size: var(--fontSize-lg); font-weight: var(--fontWeight-normal);">lg Normal</div>
+                    <div class="font-sample" style="font-size: var(--fontSize-base); font-weight: var(--fontWeight-light);">base Light</div>
+                </div>
+                <p>Usage: <span class="code">font-size: var(--fontSize-xl)</span></p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="card">
+                <h2 class="card-title">Button Styles</h2>
+                <div class="buttons">
+                    <button class="btn btn-primary">Primary</button>
+                    <button class="btn btn-secondary">Secondary</button>
+                    <button class="btn btn-success">Success</button>
+                    <button class="btn btn-danger">Danger</button>
+                </div>
+                <p style="margin-top: var(--spacing-md);">
+                    Using tokens: <span class="code">background: var(--color-brand-primary)</span>
+                </p>
+            </div>
+
+            <!-- Shadows -->
+            <div class="card">
+                <h2 class="card-title">Box Shadows</h2>
+                <div class="shadow-demo">
+                    <div class="shadow-item shadow-sm">Small</div>
+                    <div class="shadow-item shadow-base">Base</div>
+                    <div class="shadow-item shadow-md">Medium</div>
+                    <div class="shadow-item shadow-lg">Large</div>
+                    <div class="shadow-item shadow-xl">Extra Large</div>
+                </div>
+                <p>Usage: <span class="code">box-shadow: var(--shadow-md)</span></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">🚀 How to Use</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--spacing-lg);">
+                <div>
+                    <h3 style="font-size: var(--fontSize-lg); margin-bottom: var(--spacing-sm); color: var(--color-brand-primary);">CSS</h3>
+                    <pre style="background: var(--color-neutral-gray-100); padding: var(--spacing-md); border-radius: var(--borderradius-sm); font-size: var(--fontSize-sm); overflow-x: auto;"><code>.button {
+  background: var(--color-brand-primary);
+  padding: var(--spacing-md);
+  border-radius: var(--borderradius-md);
+}</code></pre>
+                </div>
+                <div>
+                    <h3 style="font-size: var(--fontSize-lg); margin-bottom: var(--spacing-sm); color: var(--color-brand-primary);">JavaScript</h3>
+                    <pre style="background: var(--color-neutral-gray-100); padding: var(--spacing-md); border-radius: var(--borderradius-sm); font-size: var(--fontSize-sm); overflow-x: auto;"><code>import tokens from './dist/js/tokens.js';
+
+const primaryColor = tokens.color.brand.primary.value;</code></pre>
+                </div>
+                <div>
+                    <h3 style="font-size: var(--fontSize-lg); margin-bottom: var(--spacing-sm); color: var(--color-brand-primary);">Build</h3>
+                    <pre style="background: var(--color-neutral-gray-100); padding: var(--spacing-md); border-radius: var(--borderradius-sm); font-size: var(--fontSize-sm); overflow-x: auto;"><code>npm install
+npm run build
+
+# Outputs:
+# dist/css/variables.css
+# dist/scss/_variables.scss
+# dist/js/tokens.js
+# dist/json/tokens.json</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

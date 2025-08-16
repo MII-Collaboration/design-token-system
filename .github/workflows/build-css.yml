@@ -1,0 +1,71 @@
+name: Build CSS from Tokens
+
+on:
+  # Trigger on any token file changes
+  push:
+    paths:
+      - 'figma-tokens.json'
+      - 'tokens/**/*.json'
+      - 'sync-tokens.js'
+      - 'build.js'
+      - 'config.json'
+    branches:
+      - main
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  build-css:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Auto-sync and build
+        run: |
+          echo "🔍 Checking for token changes..."
+          
+          # If figma-tokens.json exists and has content, sync from Figma
+          if [ -f "figma-tokens.json" ] && [ -s "figma-tokens.json" ]; then
+            echo "🎨 Found Figma tokens, converting to Style Dictionary..."
+            npm run sync:from-figma
+          else
+            echo "🔧 Using existing Style Dictionary tokens..."
+            npm run build
+          fi
+      
+      - name: Commit generated files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          
+          # Check if there are changes
+          if ! git diff --quiet; then
+            git add dist/
+            git add tokens/*-converted.json
+            git commit -m "🤖 Auto-generate CSS from tokens" || exit 0
+            git push
+            echo "✅ CSS files updated and committed"
+          else
+            echo "ℹ️ No changes to CSS files"
+          fi
+      
+      - name: Show build results
+        run: |
+          echo "✅ Build completed successfully!"
+          echo "📁 Generated files in dist/ directory:"
+          find dist/ -type f -name "*.css" -o -name "*.js" -o -name "*.json" | head -10

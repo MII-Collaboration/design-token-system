@@ -1,0 +1,9 @@
+{
+  "version": "91",
+  "checkForChanges": true,
+  "source": "github",
+  "id": "MIICollaboration/design-token-system",
+  "filePath": "figma-tokens.json",
+  "branch": "main",
+  "baseUrl": "https://api.github.com"
+}

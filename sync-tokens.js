@@ -39,6 +39,7 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
   console.log('🔍 Found token set with keys:', Object.keys(tokenSet));
   
   // Helper function to normalize token names (replace spaces with dashes)
+  // Updated to trigger GitHub Actions workflow
   function normalizeTokenName(name) {
     return name.replace(/\s+/g, '-').toLowerCase();
   }

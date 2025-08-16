@@ -54,7 +54,9 @@ jobs:
           git config --local user.name "GitHub Action Bot"
           
           # Check if there are changes (including untracked files)
-          git add dist/
+          if [ -d "dist" ]; then
+            git add dist/
+          fi
           # Only add converted token files if they exist
           if ls tokens/*-converted.json 1> /dev/null 2>&1; then
             git add tokens/*-converted.json

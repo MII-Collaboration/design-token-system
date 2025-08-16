@@ -247,9 +247,24 @@ function getConvertedTokenFiles() {
 function buildTokens() {
   console.log('🎨 Building design tokens from multiple files...');
   
+  // Backup index.html if it exists
+  let indexHtmlContent = null;
+  const indexPath = path.join('dist', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    indexHtmlContent = fs.readFileSync(indexPath, 'utf8');
+    console.log('📄 Backing up existing index.html');
+  }
+  
   // Clean build directory
   if (fs.existsSync('dist')) {
     fs.rmSync('dist', { recursive: true, force: true });
+  }
+  
+  // Restore index.html if it was backed up
+  if (indexHtmlContent) {
+    fs.mkdirSync('dist', { recursive: true });
+    fs.writeFileSync(indexPath, indexHtmlContent);
+    console.log('📄 Restored index.html');
   }
   
   const tokenFiles = getConvertedTokenFiles();

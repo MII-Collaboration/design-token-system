@@ -23,66 +23,87 @@ StyleDictionary.registerFormat({
   name: 'css/variables-with-utilities',
   formatter: function(dictionary, config) {
     const tokens = dictionary.allTokens;
+    const isVariablesFile = config.destination === 'variables.css';
     
+    // Generate CSS variables
     let css = `:root {\n`;
     tokens.forEach(token => {
-      css += `  --${token.name}: ${token.value};\n`;
+      // Remove 'global-v2-' prefix from token names
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      css += `  --${cleanName}: ${token.value};\n`;
     });
     css += `}\n\n`;
+    
+    // If this is just the variables file, return only the CSS variables
+    if (isVariablesFile) {
+      return css;
+    }
 
     // Add utility classes for colors
     css += `/* Color Utilities */\n`;
     tokens.filter(token => token.type === 'color').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.bg-${className} { background-color: var(--${token.name}); }\n`;
-      css += `.text-${className} { color: var(--${token.name}); }\n`;
-      css += `.border-${className} { border-color: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.bg-${className} { background-color: var(--${cleanName}); }\n`;
+      css += `.text-${className} { color: var(--${cleanName}); }\n`;
+      css += `.border-${className} { border-color: var(--${cleanName}); }\n`;
     });
 
     // Add utility classes for spacing
     css += `\n/* Spacing Utilities */\n`;
     tokens.filter(token => token.type === 'spacing').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.p-${className} { padding: var(--${token.name}); }\n`;
-      css += `.pt-${className} { padding-top: var(--${token.name}); }\n`;
-      css += `.pr-${className} { padding-right: var(--${token.name}); }\n`;
-      css += `.pb-${className} { padding-bottom: var(--${token.name}); }\n`;
-      css += `.pl-${className} { padding-left: var(--${token.name}); }\n`;
-      css += `.px-${className} { padding-left: var(--${token.name}); padding-right: var(--${token.name}); }\n`;
-      css += `.py-${className} { padding-top: var(--${token.name}); padding-bottom: var(--${token.name}); }\n`;
-      css += `.m-${className} { margin: var(--${token.name}); }\n`;
-      css += `.mt-${className} { margin-top: var(--${token.name}); }\n`;
-      css += `.mr-${className} { margin-right: var(--${token.name}); }\n`;
-      css += `.mb-${className} { margin-bottom: var(--${token.name}); }\n`;
-      css += `.ml-${className} { margin-left: var(--${token.name}); }\n`;
-      css += `.mx-${className} { margin-left: var(--${token.name}); margin-right: var(--${token.name}); }\n`;
-      css += `.my-${className} { margin-top: var(--${token.name}); margin-bottom: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.p-${className} { padding: var(--${cleanName}); }\n`;
+      css += `.pt-${className} { padding-top: var(--${cleanName}); }\n`;
+      css += `.pr-${className} { padding-right: var(--${cleanName}); }\n`;
+      css += `.pb-${className} { padding-bottom: var(--${cleanName}); }\n`;
+      css += `.pl-${className} { padding-left: var(--${cleanName}); }\n`;
+      css += `.px-${className} { padding-left: var(--${cleanName}); padding-right: var(--${cleanName}); }\n`;
+      css += `.py-${className} { padding-top: var(--${cleanName}); padding-bottom: var(--${cleanName}); }\n`;
+      css += `.m-${className} { margin: var(--${cleanName}); }\n`;
+      css += `.mt-${className} { margin-top: var(--${cleanName}); }\n`;
+      css += `.mr-${className} { margin-right: var(--${cleanName}); }\n`;
+      css += `.mb-${className} { margin-bottom: var(--${cleanName}); }\n`;
+      css += `.ml-${className} { margin-left: var(--${cleanName}); }\n`;
+      css += `.mx-${className} { margin-left: var(--${cleanName}); margin-right: var(--${cleanName}); }\n`;
+      css += `.my-${className} { margin-top: var(--${cleanName}); margin-bottom: var(--${cleanName}); }\n`;
     });
 
     // Add utility classes for typography
     css += `\n/* Typography Utilities */\n`;
     tokens.filter(token => token.type === 'fontSizes').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.text-${className} { font-size: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.text-${className} { font-size: var(--${cleanName}); }\n`;
     });
 
     tokens.filter(token => token.type === 'fontWeights').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.font-${className} { font-weight: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.font-${className} { font-weight: var(--${cleanName}); }\n`;
+    });
+
+    tokens.filter(token => token.type === 'lineHeights').forEach(token => {
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.leading-${className} { line-height: var(--${cleanName}); }\n`;
     });
 
     // Add utility classes for border radius
     css += `\n/* Border Radius Utilities */\n`;
     tokens.filter(token => token.type === 'borderRadius').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.rounded-${className} { border-radius: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.rounded-${className} { border-radius: var(--${cleanName}); }\n`;
     });
 
     // Add utility classes for shadows
     css += `\n/* Shadow Utilities */\n`;
     tokens.filter(token => token.type === 'boxShadow').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.shadow-${className} { box-shadow: var(--${token.name}); }\n`;
+      const cleanName = token.name.replace(/^global-v2-/, '');
+      const className = cleanName.replace(/\./g, '-');
+      css += `.shadow-${className} { box-shadow: var(--${cleanName}); }\n`;
     });
 
     return css;
@@ -142,7 +163,7 @@ function createConfigForFile(tokenFile) {
         files: [
           {
             destination: 'variables.css',
-            format: 'css/variables'
+            format: 'css/variables-with-utilities'
           },
           {
             destination: 'utilities.css',

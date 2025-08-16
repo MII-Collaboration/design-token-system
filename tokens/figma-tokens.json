@@ -2246,11 +2246,50 @@
       }
     }
   },
+  "global-test": {
+    "Primitives Color": {
+      "red-copy": {
+        "lightest": {
+          "$type": "color",
+          "$value": "#ffe5e9"
+        },
+        "lighter": {
+          "$type": "color",
+          "$value": "#ff99a5"
+        },
+        "light": {
+          "$type": "color",
+          "$value": "#ff4d67"
+        },
+        "base": {
+          "$type": "color",
+          "$value": "#ff0025"
+        },
+        "dark": {
+          "$type": "color",
+          "$value": "#cc001e"
+        },
+        "darker": {
+          "$type": "color",
+          "$value": "#990017"
+        },
+        "darkest": {
+          "$type": "color",
+          "$value": "#660010"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "#ffff"
+        }
+      }
+    }
+  },
   "$themes": [],
   "$metadata": {
     "tokenSetOrder": [
       "global",
-      "global.v2"
+      "global.v2",
+      "global-test"
     ]
   }
 }

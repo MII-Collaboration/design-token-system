@@ -152,7 +152,9 @@ StyleDictionary.registerTransformGroup({
 
 // Function to create config for specific token file
 function createConfigForFile(tokenFile) {
-  const fileName = path.parse(tokenFile).name.replace('-converted', '');
+  const baseName = path.parse(tokenFile).name;
+  // Remove '-converted' suffix if it exists, otherwise use the original name
+  const fileName = baseName.endsWith('-converted') ? baseName.replace('-converted', '') : baseName;
   
   return {
     source: [tokenFile],
@@ -205,7 +207,7 @@ function createConfigForFile(tokenFile) {
   };
 }
 
-// Function to get all converted token files
+// Function to get all token files (both converted and original)
 function getConvertedTokenFiles() {
   const tokensDir = path.join(__dirname, 'tokens');
   
@@ -213,9 +215,31 @@ function getConvertedTokenFiles() {
     return [];
   }
   
-  return fs.readdirSync(tokensDir)
-    .filter(file => file.endsWith('-converted.json'))
+  const allTokenFiles = fs.readdirSync(tokensDir)
+    .filter(file => file.endsWith('.json'))
     .map(file => path.join(tokensDir, file));
+  
+  // Prioritize converted files, but include original files if no converted version exists
+  const processedFiles = [];
+  const convertedFiles = allTokenFiles.filter(file => file.includes('-converted.json'));
+  const originalFiles = allTokenFiles.filter(file => !file.includes('-converted.json'));
+  
+  // Add all converted files
+  processedFiles.push(...convertedFiles);
+  
+  // Add original files only if no converted version exists
+  originalFiles.forEach(originalFile => {
+    const baseName = path.parse(originalFile).name;
+    const convertedVersion = convertedFiles.find(converted => 
+      converted.includes(`${baseName}-converted.json`)
+    );
+    
+    if (!convertedVersion) {
+      processedFiles.push(originalFile);
+    }
+  });
+  
+  return processedFiles;
 }
 
 // Build function
@@ -240,7 +264,8 @@ function buildTokens() {
   let errorCount = 0;
   
   tokenFiles.forEach(tokenFile => {
-    const fileName = path.parse(tokenFile).name.replace('-converted', '');
+    const baseName = path.parse(tokenFile).name;
+    const fileName = baseName.endsWith('-converted') ? baseName.replace('-converted', '') : baseName;
     console.log(`\n🔨 Building tokens from: ${fileName}`);
     
     try {
@@ -267,7 +292,8 @@ function buildTokens() {
   
   console.log('\n📁 Generated file structure:');
   tokenFiles.forEach(tokenFile => {
-    const fileName = path.parse(tokenFile).name.replace('-converted', '');
+    const baseName = path.parse(tokenFile).name;
+    const fileName = baseName.endsWith('-converted') ? baseName.replace('-converted', '') : baseName;
     console.log(`   📂 dist/css/${fileName}/variables.css`);
     console.log(`   📂 dist/css/${fileName}/utilities.css`);
     console.log(`   📂 dist/scss/${fileName}/_variables.scss`);

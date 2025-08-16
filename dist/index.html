@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Token System</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #2563eb;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            color: #374151;
+            margin-top: 2rem;
+        }
+        .token-set {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .file-item {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        .file-item h4 {
+            margin: 0 0 0.5rem 0;
+            color: #1f2937;
+        }
+        .file-link {
+            display: inline-block;
+            color: #2563eb;
+            text-decoration: none;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #2563eb;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            margin: 0.25rem 0.25rem 0.25rem 0;
+        }
+        .file-link:hover {
+            background: #2563eb;
+            color: white;
+        }
+        .description {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Design Token System</h1>
+    
+    <div class="description">
+        <p><strong>Welcome to the Design Token System!</strong></p>
+        <p>This system automatically generates CSS variables, SCSS variables, JavaScript tokens, and JSON files from design tokens. Each token set is organized in its own folder structure.</p>
+    </div>
+
+    <div class="token-set">
+        <h2>📁 Global V2 Tokens</h2>
+        <div class="file-list">
+            <div class="file-item">
+                <h4>CSS Files</h4>
+                <a href="css/global-v2/variables.css" class="file-link">variables.css</a>
+                <a href="css/global-v2/utilities.css" class="file-link">utilities.css</a>
+            </div>
+            <div class="file-item">
+                <h4>SCSS Files</h4>
+                <a href="scss/global-v2/_variables.scss" class="file-link">_variables.scss</a>
+            </div>
+            <div class="file-item">
+                <h4>JavaScript Files</h4>
+                <a href="js/global-v2/tokens.js" class="file-link">tokens.js</a>
+                <a href="js/global-v2/tokens.d.ts" class="file-link">tokens.d.ts</a>
+            </div>
+            <div class="file-item">
+                <h4>JSON Files</h4>
+                <a href="json/global-v2/tokens.json" class="file-link">tokens.json</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="token-set">
+        <h2>📁 Custom Tokens</h2>
+        <div class="file-list">
+            <div class="file-item">
+                <h4>CSS Files</h4>
+                <a href="css/my-custom-tokens/variables.css" class="file-link">variables.css</a>
+                <a href="css/my-custom-tokens/utilities.css" class="file-link">utilities.css</a>
+            </div>
+            <div class="file-item">
+                <h4>SCSS Files</h4>
+                <a href="scss/my-custom-tokens/_variables.scss" class="file-link">_variables.scss</a>
+            </div>
+            <div class="file-item">
+                <h4>JavaScript Files</h4>
+                <a href="js/my-custom-tokens/tokens.js" class="file-link">tokens.js</a>
+                <a href="js/my-custom-tokens/tokens.d.ts" class="file-link">tokens.d.ts</a>
+            </div>
+            <div class="file-item">
+                <h4>JSON Files</h4>
+                <a href="json/my-custom-tokens/tokens.json" class="file-link">tokens.json</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="description">
+        <h3>📖 How to Use</h3>
+        <ul>
+            <li><strong>CSS Variables:</strong> Import the variables.css file to use CSS custom properties</li>
+            <li><strong>CSS Utilities:</strong> Import utilities.css for pre-built utility classes</li>
+            <li><strong>SCSS:</strong> Import the _variables.scss file in your Sass projects</li>
+            <li><strong>JavaScript:</strong> Import tokens.js to use design tokens in your JS/TS applications</li>
+            <li><strong>JSON:</strong> Use tokens.json for any custom integrations or tooling</li>
+        </ul>
+    </div>
+
+    <footer style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e5e7eb; color: #6b7280; text-align: center;">
+        <p>Generated automatically from design tokens • <a href="https://github.com/MII-Collaboration/design-token-system" style="color: #2563eb;">View on GitHub</a></p>
+    </footer>
+</body>
+</html>

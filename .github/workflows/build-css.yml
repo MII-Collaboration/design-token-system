@@ -53,13 +53,14 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Bot"
           
-          # Check if there are changes
-          if ! git diff --quiet; then
-            git add dist/
-            # Only add converted token files if they exist
-            if ls tokens/*-converted.json 1> /dev/null 2>&1; then
-              git add tokens/*-converted.json
-            fi
+          # Check if there are changes (including untracked files)
+          git add dist/
+          # Only add converted token files if they exist
+          if ls tokens/*-converted.json 1> /dev/null 2>&1; then
+            git add tokens/*-converted.json
+          fi
+          
+          if ! git diff --cached --quiet; then
             git commit -m "🤖 Auto-generate CSS from tokens" || exit 0
             git push
             echo "✅ CSS files updated and committed"

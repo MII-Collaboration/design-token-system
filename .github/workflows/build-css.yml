@@ -36,13 +36,13 @@ jobs:
         run: npm ci
       
       - name: Sync tokens from Figma format
-         run: npm run sync:from-figma
+        run: npm run sync:from-figma
             
-       - name: Check build output
-         run: |
-           echo "📁 Checking build output:"
-           ls -la dist/ || echo "dist/ folder not found"
-           find . -name "*-converted.json" || echo "No converted files found"
+      - name: Check build output
+        run: |
+          echo "📁 Checking build output:"
+          ls -la dist/ || echo "dist/ folder not found"
+          find . -name "*-converted.json" || echo "No converted files found"
       
       - name: Commit generated files
         run: |

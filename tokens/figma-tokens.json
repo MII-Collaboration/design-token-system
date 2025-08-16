@@ -2184,63 +2184,63 @@
       "$value": "Telkomsel Batik Sans"
     },
     "Gradients Color": {
-      "Dark Red": {
+      "dark-red": {
         "$type": "color",
         "$value": "linear-gradient(37deg, #b90024 5.35%, #ff0025 69.24%, #fd195e 100%)"
       },
-      "Dark Blue": {
+      "dark-blue": {
         "$type": "color",
         "$value": "linear-gradient(33deg, #001a41 0%, #0e336c 100%)"
       },
-      "Candy Red": {
+      "candy-red": {
         "$type": "color",
         "$value": "linear-gradient(44deg, #cd0a45 58.4%, #fd2b77 100%)"
       },
-      "Blue": {
+      "blue": {
         "$type": "color",
         "$value": "linear-gradient(225deg, #073975 0%, #0450a9 55.03%)"
       },
-      "Pink": {
+      "pink": {
         "$type": "color",
         "$value": "linear-gradient(44deg, #eb82a2 58.4%, #fb2974 100%)"
       },
-      "Yellow": {
+      "yellow": {
         "$type": "color",
         "$value": "linear-gradient(225deg, #d8db4b 0%, #eff189 54.38%)"
       },
-      "Orange": {
+      "orange": {
         "$type": "color",
         "$value": "linear-gradient(225deg, #df9330 0%, #f1ba72 51.35%)"
       },
-      "Green": {
+      "green": {
         "$type": "color",
         "$value": "linear-gradient(225deg, #08b56d 0%, #3ecd92 53.96%)"
       },
-      "Light Blue": {
+      "light-blue": {
         "$type": "color",
         "$value": "linear-gradient(180deg, #cdd6e7 0%, #cdd6e700 100%)"
       },
-      "Bronze": {
+      "bronze": {
         "$type": "color",
         "$value": "linear-gradient(33deg, #a47146 0%, #d9a274 100%)"
       },
-      "Silver 1": {
+      "silver-light": {
         "$type": "color",
         "$value": "linear-gradient(33deg, #939592 0%, #cdcdcd 100%)"
       },
-      "Silver 2": {
+      "silver-dark": {
         "$type": "color",
         "$value": "linear-gradient(33deg, #576080 0%, #bac5db 100%)"
       },
-      "Gold 1": {
+      "gold-light": {
         "$type": "color",
         "$value": "linear-gradient(225deg, #eff189 31.97%, #b4b726 98.39%)"
       },
-      "Gold 2": {
+      "gold-dark": {
         "$type": "color",
         "$value": "linear-gradient(244deg, #fcc40b 0%, #b8922f 98.39%)"
       },
-      "Yellow Background": {
+      "yellow-background": {
         "$type": "color",
         "$value": "linear-gradient(180deg, #ffeed8 0%, #ffeed800 100%)"
       }

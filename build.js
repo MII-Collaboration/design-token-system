@@ -383,10 +383,16 @@ StyleDictionary.registerTransformGroup({
 });
 
 // Function to create config for specific token file
-function createConfigForFile(tokenFile) {
+function createConfigForFile(tokenFile, originalFileName = null) {
   const baseName = path.parse(tokenFile).name;
-  // Remove '-converted' suffix if it exists, otherwise use the original name
-  const fileName = baseName.endsWith('-converted') ? baseName.replace('-converted', '') : baseName;
+  // Use original file name if provided (for temp files), otherwise process the current file name
+  let fileName;
+  if (originalFileName) {
+    fileName = originalFileName;
+  } else {
+    // Remove '-converted' and '-temp' suffixes if they exist
+    fileName = baseName.replace(/-converted$/, '').replace(/-temp$/, '');
+  }
   
   return {
     source: [tokenFile],
@@ -524,7 +530,8 @@ function buildTokens() {
         console.log(`   🔧 Preprocessed letterSpacing references`);
       }
       
-      const config = createConfigForFile(processedFile);
+      // Pass original fileName to ensure correct output folder naming
+      const config = createConfigForFile(processedFile, fileName);
       const styleDictionary = StyleDictionary.extend(config);
       
       styleDictionary.buildAllPlatforms();

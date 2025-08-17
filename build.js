@@ -3,6 +3,36 @@ const StyleDictionary = require('style-dictionary');
 const fs = require('fs');
 const path = require('path');
 
+// Function to preprocess token files and fix letterSpacing references
+function preprocessTokenFile(tokenFile) {
+  try {
+    const content = fs.readFileSync(tokenFile, 'utf8');
+    // Convert letterSpacing references from camelCase to lowercase
+    const fixedContent = content.replace(/"letterSpacing\./g, '"letterspacing.');
+    
+    // Create a temporary file with fixed content
+    const tempFile = tokenFile.replace('.json', '-temp.json');
+    fs.writeFileSync(tempFile, fixedContent);
+    return tempFile;
+  } catch (error) {
+    console.warn(`⚠️ Warning: Could not preprocess ${tokenFile}:`, error.message);
+    return tokenFile; // Return original file if preprocessing fails
+  }
+}
+
+// Function to cleanup temporary files
+function cleanupTempFiles(tempFiles) {
+  tempFiles.forEach(tempFile => {
+    try {
+      if (fs.existsSync(tempFile) && tempFile.includes('-temp.json')) {
+        fs.unlinkSync(tempFile);
+      }
+    } catch (error) {
+      console.warn(`⚠️ Warning: Could not cleanup ${tempFile}:`, error.message);
+    }
+  });
+}
+
 // Custom transform for converting pixels to rem
 StyleDictionary.registerTransform({
   name: 'size/pxToRem',
@@ -479,6 +509,7 @@ function buildTokens() {
   
   let successCount = 0;
   let errorCount = 0;
+  const tempFiles = [];
   
   tokenFiles.forEach(tokenFile => {
     const baseName = path.parse(tokenFile).name;
@@ -486,7 +517,14 @@ function buildTokens() {
     console.log(`\n🔨 Building tokens from: ${fileName}`);
     
     try {
-      const config = createConfigForFile(tokenFile);
+      // Preprocess token file to fix letterSpacing references
+      const processedFile = preprocessTokenFile(tokenFile);
+      if (processedFile !== tokenFile) {
+        tempFiles.push(processedFile);
+        console.log(`   🔧 Preprocessed letterSpacing references`);
+      }
+      
+      const config = createConfigForFile(processedFile);
       const styleDictionary = StyleDictionary.extend(config);
       
       styleDictionary.buildAllPlatforms();
@@ -500,6 +538,12 @@ function buildTokens() {
       errorCount++;
     }
   });
+  
+  // Cleanup temporary files
+  if (tempFiles.length > 0) {
+    console.log(`\n🧹 Cleaning up ${tempFiles.length} temporary files...`);
+    cleanupTempFiles(tempFiles);
+  }
   
   console.log(`\n🎉 Build completed!`);
   console.log(`✅ Success: ${successCount} files`);

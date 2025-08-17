@@ -38,6 +38,12 @@ jobs:
       - name: Sync tokens from Figma format
         run: npm run sync:from-figma
       
+      - name: Fix letterSpacing references in token files
+        run: |
+          echo "🔧 Preprocessing token files to fix letterSpacing references..."
+          # This step is now handled automatically in build.js preprocessing
+          echo "✅ letterSpacing preprocessing will be handled during build"
+      
       - name: Build CSS from tokens
         run: npm run build
             

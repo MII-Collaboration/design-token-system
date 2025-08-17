@@ -1,4 +1,5 @@
 {
+  "$description": "Test GitHub Actions workflow",
   "global-v2": {
     "global": {
       "v2": {

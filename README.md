@@ -2,6 +2,8 @@
 
 Sistem Design Token menggunakan Style Dictionary untuk mengelola dan mendistribusikan design tokens ke berbagai format.
 
+<!-- Test GitHub Actions workflow -->
+
 [![npm version](https://img.shields.io/badge/npm-v1.0.0-green)](package.json)
 [![License](https://img.shields.io/badge/license-ISC-blue)](LICENSE)
 

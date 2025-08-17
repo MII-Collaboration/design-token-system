@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Token System</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #007acc;
+            padding-bottom: 10px;
+        }
+        .token-set {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        .token-set h2 {
+            color: #555;
+            margin-top: 0;
+        }
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .file-link {
+            display: block;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.2s;
+        }
+        .file-link:hover {
+            background: #007acc;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .file-type {
+            font-size: 0.8em;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Design Token System</h1>
+        <p class="description">
+            Welcome to our design token system! This page provides access to all generated design tokens 
+            in various formats (CSS, SCSS, JavaScript, JSON) for different token sets.
+        </p>
+        
+        <div class="token-set">
+            <h2>📋 Figma Tokens</h2>
+            <div class="file-list">
+                <a href="css/figma-tokens/variables.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Variables
+                </a>
+                <a href="css/figma-tokens/utilities.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Utilities
+                </a>
+                <a href="scss/figma-tokens/_variables.scss" class="file-link">
+                    <div class="file-type">SCSS</div>
+                    Variables
+                </a>
+                <a href="js/figma-tokens/tokens.js" class="file-link">
+                    <div class="file-type">JS</div>
+                    Tokens
+                </a>
+                <a href="json/figma-tokens/tokens.json" class="file-link">
+                    <div class="file-type">JSON</div>
+                    Tokens
+                </a>
+            </div>
+        </div>
+        
+        <div class="token-set">
+            <h2>🌐 Global V2 Tokens</h2>
+            <div class="file-list">
+                <a href="css/global-v2/variables.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Variables
+                </a>
+                <a href="css/global-v2/utilities.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Utilities
+                </a>
+                <a href="scss/global-v2/_variables.scss" class="file-link">
+                    <div class="file-type">SCSS</div>
+                    Variables
+                </a>
+                <a href="js/global-v2/tokens.js" class="file-link">
+                    <div class="file-type">JS</div>
+                    Tokens
+                </a>
+                <a href="json/global-v2/tokens.json" class="file-link">
+                    <div class="file-type">JSON</div>
+                    Tokens
+                </a>
+            </div>
+        </div>
+        
+        <div class="token-set">
+            <h2>🎯 Custom Tokens</h2>
+            <div class="file-list">
+                <a href="css/my-custom-tokens/variables.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Variables
+                </a>
+                <a href="css/my-custom-tokens/utilities.css" class="file-link">
+                    <div class="file-type">CSS</div>
+                    Utilities
+                </a>
+                <a href="scss/my-custom-tokens/_variables.scss" class="file-link">
+                    <div class="file-type">SCSS</div>
+                    Variables
+                </a>
+                <a href="js/my-custom-tokens/tokens.js" class="file-link">
+                    <div class="file-type">JS</div>
+                    Tokens
+                </a>
+                <a href="json/my-custom-tokens/tokens.json" class="file-link">
+                    <div class="file-type">JSON</div>
+                    Tokens
+                </a>
+            </div>
+        </div>
+        
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; text-align: center;">
+            <p>🤖 Auto-generated from design tokens • Last updated: <span id="lastUpdate"></span></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Set last update time
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+    </script>
+</body>
+</html>

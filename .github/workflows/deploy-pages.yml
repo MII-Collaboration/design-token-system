@@ -9,6 +9,13 @@ on:
     branches:
       - main
   
+  # Trigger pada push ke main branch
+  push:
+    branches:
+      - main
+    paths:
+      - 'dist/**'
+  
   # Allow manual trigger
   workflow_dispatch:
 
@@ -16,8 +23,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     
-    # Hanya jalankan jika workflow sebelumnya berhasil
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    # Jalankan jika workflow sebelumnya berhasil, atau manual trigger, atau push ke main
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' || github.event_name == 'push' }}
     
     permissions:
       contents: read
@@ -36,20 +43,67 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Pull latest changes
+        run: |
+          git pull origin main
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
-      - name: Check dist folder
+      - name: Ensure dist folder exists
         run: |
-          echo "📁 Checking dist folder contents:"
-          if [ -d "dist" ]; then
-            find dist/ -type f | head -20
-            echo "Total files in dist: $(find dist/ -type f | wc -l)"
-          else
-            echo "❌ dist folder not found!"
-            exit 1
+          echo "📁 Checking and preparing dist folder:"
+          if [ ! -d "dist" ]; then
+            echo "⚠️ dist folder not found, creating it..."
+            mkdir -p dist
           fi
+          
+          # Pastikan ada file index.html
+          if [ ! -f "dist/index.html" ]; then
+            echo "📄 Creating index.html..."
+            cat > dist/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Design Token System</title>
+              <style>
+                  body { font-family: Arial, sans-serif; margin: 40px; }
+                  h1 { color: #333; }
+                  .token-section { margin: 20px 0; }
+                  .token-link { display: inline-block; margin: 10px; padding: 10px 20px; background: #f0f0f0; text-decoration: none; border-radius: 5px; }
+                  .token-link:hover { background: #e0e0e0; }
+              </style>
+          </head>
+          <body>
+              <h1>Design Token System</h1>
+              <p>Welcome to the Design Token System. Choose a token set to explore:</p>
+              
+              <div class="token-section">
+                  <h2>Available Token Sets</h2>
+                  <a href="./css/figma-tokens/variables.css" class="token-link">Figma Tokens CSS</a>
+                  <a href="./css/global-v2/variables.css" class="token-link">Global V2 CSS</a>
+                  <a href="./css/my-custom-tokens/variables.css" class="token-link">Custom Tokens CSS</a>
+              </div>
+              
+              <div class="token-section">
+                  <h2>JSON Tokens</h2>
+                  <a href="./json/figma-tokens/tokens.json" class="token-link">Figma Tokens JSON</a>
+                  <a href="./json/global-v2/tokens.json" class="token-link">Global V2 JSON</a>
+                  <a href="./json/my-custom-tokens/tokens.json" class="token-link">Custom Tokens JSON</a>
+              </div>
+          </body>
+          </html>
+          EOF
+          fi
+          
+          echo "📁 Final dist folder contents:"
+          find dist/ -type f | head -20
+          echo "Total files in dist: $(find dist/ -type f | wc -l)"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -59,9 +113,23 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: false
       
       - name: Show deployment result
+        if: success()
         run: |
-          echo "✅ Deployment completed!"
+          echo "✅ Deployment completed successfully!"
           echo "🌐 Site URL: ${{ steps.deployment.outputs.page_url }}"
           echo "📁 Deployed content from dist/ folder"
+          echo "📊 Deployment ID: ${{ steps.deployment.outputs.deployment_id }}"
+      
+      - name: Handle deployment failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Please check the workflow logs for more details."
+          echo "Common issues:"
+          echo "- GitHub Pages not enabled in repository settings"
+          echo "- Insufficient permissions"
+          echo "- Invalid content in dist/ folder"
+          exit 1

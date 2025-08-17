@@ -37,6 +37,9 @@ jobs:
       
       - name: Sync tokens from Figma format
         run: npm run sync:from-figma
+      
+      - name: Build CSS from tokens
+        run: npm run build
             
       - name: Check build output
         run: |

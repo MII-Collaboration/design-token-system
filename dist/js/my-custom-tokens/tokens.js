@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 17 Aug 2025 17:54:07 GMT
+ * Generated on Sun, 17 Aug 2025 17:55:32 GMT
  */
 
 export const Primary = "#007bff";

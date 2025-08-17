@@ -349,7 +349,7 @@ export default tokens;
 // Register a custom transform group
 StyleDictionary.registerTransformGroup({
   name: 'custom/css',
-  transforms: ['attribute/cti', 'name/css-clean', 'time/seconds', 'content/icon', 'size/rem', 'color/css']
+  transforms: ['attribute/cti', 'name/css-clean', 'time/seconds', 'content/icon', 'size/pxToRem', 'color/css']
 });
 
 // Function to create config for specific token file

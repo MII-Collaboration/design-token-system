@@ -19,20 +19,224 @@ StyleDictionary.registerTransform({
   }
 });
 
+// Custom transform for clean CSS variable names
+StyleDictionary.registerTransform({
+  name: 'name/css-clean',
+  type: 'name',
+  transformer: function(token, options) {
+    // Get the path array and join with dashes
+    let name = token.path.join('-').toLowerCase();
+    
+    // Remove common prefixes that might cause issues
+    name = name.replace(/^(global-v2-|figma-tokens-|my-custom-tokens-)/, '');
+    
+    // Simplify color naming by removing redundant prefixes
+    name = name.replace(/^primitives-color-/, 'color-');
+    name = name.replace(/^semantics-color-/, 'color-');
+    name = name.replace(/^gradients-color-/, 'gradient-');
+    
+    // Simplify typography naming
+    name = name.replace(/^display-/, 'font-size-display-');
+    name = name.replace(/^heading-/, 'font-size-');
+    name = name.replace(/^body-/, 'font-size-body-');
+    name = name.replace(/^label-/, 'font-size-label-');
+    name = name.replace(/^caption-/, 'font-size-caption-');
+    name = name.replace(/^hyperlink-/, 'font-size-hyperlink-');
+    
+    // Font weight simplification
+    if (name === 'thin') name = 'font-thin';
+    if (name === 'extra-light') name = 'font-extra-light';
+    if (name === 'light') name = 'font-light';
+    if (name === 'regular') name = 'font-regular';
+    if (name === 'medium') name = 'font-medium';
+    if (name === 'semi-bold') name = 'font-semi-bold';
+    if (name === 'bold') name = 'font-bold';
+    if (name === 'extra-bold') name = 'font-extra-bold';
+    if (name === 'black') name = 'font-black';
+    
+    // Clean up any double dashes or invalid characters
+    name = name.replace(/--+/g, '-');
+    name = name.replace(/[^a-z0-9-]/g, '-');
+    name = name.replace(/^-+|-+$/g, '');
+    
+    return name;
+  }
+});
+
+
+
 // Custom format for CSS with utility classes
 StyleDictionary.registerFormat({
   name: 'css/variables-with-utilities',
   formatter: function(dictionary, config) {
-    const tokens = dictionary.allTokens;
     const isVariablesFile = config.destination === 'variables.css';
+    const tokens = dictionary.allTokens;
+    
+    // Group shadow tokens and create complete CSS shadow values
+    const shadowGroups = {};
+    const processedTokens = [];
+    
+    tokens.forEach(token => {
+      // Check if this is a shadow component token with layer support
+      const shadowMatch = token.path.join('.').match(/^(.+\.shadow\.[^.]+)(?:\.(\d+))?\.?(x|y|blur|spread|color|type)$/);
+      
+      if (shadowMatch) {
+        const shadowBasePath = shadowMatch[1];
+        const layer = shadowMatch[2] || '0'; // Default to layer 0 if no layer specified
+        const component = shadowMatch[3];
+        const shadowKey = `${shadowBasePath}.${layer}`;
+        
+        if (!shadowGroups[shadowKey]) {
+          shadowGroups[shadowKey] = { basePath: shadowBasePath, layer: layer };
+        }
+        shadowGroups[shadowKey][component] = token.value;
+      } else {
+        processedTokens.push(token);
+      }
+    });
+    
+    // Group shadow layers by base path
+    const shadowsByBase = {};
+    Object.entries(shadowGroups).forEach(([shadowKey, components]) => {
+      const basePath = components.basePath;
+      if (!shadowsByBase[basePath]) {
+        shadowsByBase[basePath] = {};
+      }
+      shadowsByBase[basePath][components.layer] = components;
+    });
+    
+    // Convert shadow groups to complete CSS shadow values
+    Object.entries(shadowsByBase).forEach(([basePath, layers]) => {
+      const shadowLayers = [];
+      
+      // Sort layers by number and create shadow values
+      Object.keys(layers).sort((a, b) => parseInt(a) - parseInt(b)).forEach(layerNum => {
+        const components = layers[layerNum];
+        
+        if (components.x !== undefined && components.y !== undefined) {
+          const x = components.x || 0;
+          const y = components.y || 0;
+          const blur = components.blur || 0;
+          const spread = components.spread || 0;
+          const color = components.color || 'rgba(0, 0, 0, 0.1)';
+          const type = components.type || 'dropShadow';
+          
+          let shadowValue;
+          if (type === 'innerShadow') {
+            shadowValue = `inset ${x}px ${y}px ${blur}px ${spread}px ${color}`;
+          } else {
+            shadowValue = `${x}px ${y}px ${blur}px ${spread}px ${color}`;
+          }
+          
+          shadowLayers.push(shadowValue);
+        }
+      });
+      
+      if (shadowLayers.length > 0) {
+        // Create a clean shadow token name
+        const shadowName = basePath.replace(/\./g, '-').replace(/^global-v2-/, '');
+        
+        processedTokens.push({
+          name: shadowName,
+          value: shadowLayers.join(', '),
+          type: 'boxShadow',
+          path: basePath.split('.')
+        });
+      }
+    });
     
     // Generate CSS variables
     let css = `:root {\n`;
-    tokens.forEach(token => {
-      // Remove 'global-v2-' prefix from token names
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      css += `  --${cleanName}: ${token.value};\n`;
+    
+    // Group tokens by category for organized comments
+    const tokensByCategory = {
+      'Typography - Size': [],
+      'Typography - Weight': [],
+      'Typography - Line Height': [],
+      'Typography - Letter Spacing': [],
+      'Typography - Font Family': [],
+      'Color - Brand': [],
+      'Color - Focus': [],
+      'Color - Extended': [],
+      'Color - Gradients': [],
+      'Border': [],
+      'Spacing': [],
+      'Shadow': [],
+      'Other': []
+    };
+    
+    processedTokens.forEach(token => {
+      const name = token.name;
+      
+      // Typography - Size (font sizes)
+      if (name.includes('font-size-')) {
+        tokensByCategory['Typography - Size'].push(token);
+      }
+      // Typography - Weight (font weights)
+      else if (name.startsWith('font-') && (name.includes('thin') || name.includes('light') || name.includes('regular') || name.includes('medium') || name.includes('bold') || name.includes('black'))) {
+        tokensByCategory['Typography - Weight'].push(token);
+      }
+      // Typography - Line Height (line heights) - only exact matches without other prefixes
+      else if ((name === 'xs' || name === 'sm' || name === 'xl' || name === '2xl' || name === '3xl' || name === '4xl' || name === '5xl' || name === '6xl' || name === '7xl') && !name.includes('space') && !name.includes('font-size')) {
+        tokensByCategory['Typography - Line Height'].push(token);
+      }
+      // Typography - Letter Spacing
+      else if (name.includes('letterspacing')) {
+        tokensByCategory['Typography - Letter Spacing'].push(token);
+      }
+      // Typography - Font Family
+      else if ((name === 'primary' || name === 'secondary' || name === 'telkomse-batik-sans') && !name.includes('color')) {
+        tokensByCategory['Typography - Font Family'].push(token);
+      }
+      // Color - Brand (primary, secondary colors)
+      else if (name.startsWith('color-') && (name.includes('primary') || name.includes('secondary'))) {
+        tokensByCategory['Color - Brand'] = tokensByCategory['Color - Brand'] || [];
+        tokensByCategory['Color - Brand'].push(token);
+      }
+      // Color - Focus
+      else if (name.startsWith('color-focus')) {
+        tokensByCategory['Color - Focus'] = tokensByCategory['Color - Focus'] || [];
+        tokensByCategory['Color - Focus'].push(token);
+      }
+      // Color - Extended (other colors)
+      else if (name.startsWith('color-') && !name.includes('primary') && !name.includes('secondary') && !name.includes('focus')) {
+        tokensByCategory['Color - Extended'] = tokensByCategory['Color - Extended'] || [];
+        tokensByCategory['Color - Extended'].push(token);
+      }
+      // Gradients
+      else if (name.startsWith('gradient-')) {
+        tokensByCategory['Color - Gradients'] = tokensByCategory['Color - Gradients'] || [];
+        tokensByCategory['Color - Gradients'].push(token);
+      }
+      // Border
+      else if (name.includes('border-')) {
+        tokensByCategory['Border'].push(token);
+      }
+      // Spacing
+      else if (name.includes('space-')) {
+        tokensByCategory['Spacing'].push(token);
+      }
+      // Shadow
+      else if (name.includes('shadow-')) {
+        tokensByCategory['Shadow'].push(token);
+      }
+      // Other
+      else {
+        tokensByCategory['Other'].push(token);
+      }
     });
+    
+    // Generate CSS with organized comments
+    Object.entries(tokensByCategory).forEach(([category, tokens]) => {
+      if (tokens.length > 0) {
+        css += `  /*! ${category} */\n`;
+        tokens.forEach(token => {
+          css += `  --${token.name}: ${token.value};\n`;
+        });
+        css += `\n`;
+      }
+    });
+    
     css += `}\n\n`;
     
     // If this is just the variables file, return only the CSS variables
@@ -42,50 +246,47 @@ StyleDictionary.registerFormat({
 
     // Add utility classes for colors
     css += `/* Color Utilities */\n`;
-    tokens.filter(token => token.type === 'color').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.bg-${className} { background-color: var(--${cleanName}); }\n`;
-      css += `.text-${className} { color: var(--${cleanName}); }\n`;
-      css += `.border-${className} { border-color: var(--${cleanName}); }\n`;
+    processedTokens.filter(token => token.type === 'color').forEach(token => {
+      const className = token.name.replace(/\./g, '-');
+      css += `.bg-${className} { background-color: var(--${token.name}); }\n`;
+      css += `.text-${className} { color: var(--${token.name}); }\n`;
+      css += `.border-${className} { border-color: var(--${token.name}); }\n`;
     });
 
     // Add utility classes for spacing
     css += `\n/* Spacing Utilities */\n`;
-    tokens.filter(token => token.type === 'spacing').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.p-${className} { padding: var(--${cleanName}); }\n`;
-      css += `.pt-${className} { padding-top: var(--${cleanName}); }\n`;
-      css += `.pr-${className} { padding-right: var(--${cleanName}); }\n`;
-      css += `.pb-${className} { padding-bottom: var(--${cleanName}); }\n`;
-      css += `.pl-${className} { padding-left: var(--${cleanName}); }\n`;
-      css += `.px-${className} { padding-left: var(--${cleanName}); padding-right: var(--${cleanName}); }\n`;
-      css += `.py-${className} { padding-top: var(--${cleanName}); padding-bottom: var(--${cleanName}); }\n`;
-      css += `.m-${className} { margin: var(--${cleanName}); }\n`;
-      css += `.mt-${className} { margin-top: var(--${cleanName}); }\n`;
-      css += `.mr-${className} { margin-right: var(--${cleanName}); }\n`;
-      css += `.mb-${className} { margin-bottom: var(--${cleanName}); }\n`;
-      css += `.ml-${className} { margin-left: var(--${cleanName}); }\n`;
-      css += `.mx-${className} { margin-left: var(--${cleanName}); margin-right: var(--${cleanName}); }\n`;
-      css += `.my-${className} { margin-top: var(--${cleanName}); margin-bottom: var(--${cleanName}); }\n`;
+    processedTokens.filter(token => token.type === 'spacing').forEach(token => {
+      const className = token.name.replace(/\./g, '-');
+      css += `.p-${className} { padding: var(--${token.name}); }\n`;
+      css += `.pt-${className} { padding-top: var(--${token.name}); }\n`;
+      css += `.pr-${className} { padding-right: var(--${token.name}); }\n`;
+      css += `.pb-${className} { padding-bottom: var(--${token.name}); }\n`;
+      css += `.pl-${className} { padding-left: var(--${token.name}); }\n`;
+      css += `.px-${className} { padding-left: var(--${token.name}); padding-right: var(--${token.name}); }\n`;
+      css += `.py-${className} { padding-top: var(--${token.name}); padding-bottom: var(--${token.name}); }\n`;
+      css += `.m-${className} { margin: var(--${token.name}); }\n`;
+      css += `.mt-${className} { margin-top: var(--${token.name}); }\n`;
+      css += `.mr-${className} { margin-right: var(--${token.name}); }\n`;
+      css += `.mb-${className} { margin-bottom: var(--${token.name}); }\n`;
+      css += `.ml-${className} { margin-left: var(--${token.name}); }\n`;
+      css += `.mx-${className} { margin-left: var(--${token.name}); margin-right: var(--${token.name}); }\n`;
+      css += `.my-${className} { margin-top: var(--${token.name}); margin-bottom: var(--${token.name}); }\n`;
     });
 
     // Add utility classes for typography
     css += `\n/* Typography Utilities */\n`;
-    tokens.filter(token => token.type === 'fontSizes').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.text-${className} { font-size: var(--${cleanName}); }\n`;
+    processedTokens.filter(token => token.type === 'fontSizes').forEach(token => {
+      const className = token.name.replace(/\./g, '-');
+      css += `.text-${className} { font-size: var(--${token.name}); }\n`;
     });
 
-    tokens.filter(token => token.type === 'fontWeights').forEach(token => {
+    processedTokens.filter(token => token.type === 'fontWeights').forEach(token => {
       const cleanName = token.name.replace(/^global-v2-/, '');
       const className = cleanName.replace(/\./g, '-');
       css += `.font-${className} { font-weight: var(--${cleanName}); }\n`;
     });
 
-    tokens.filter(token => token.type === 'lineHeights').forEach(token => {
+    processedTokens.filter(token => token.type === 'lineHeights').forEach(token => {
       const cleanName = token.name.replace(/^global-v2-/, '');
       const className = cleanName.replace(/\./g, '-');
       css += `.leading-${className} { line-height: var(--${cleanName}); }\n`;
@@ -93,7 +294,7 @@ StyleDictionary.registerFormat({
 
     // Add utility classes for border radius
     css += `\n/* Border Radius Utilities */\n`;
-    tokens.filter(token => token.type === 'borderRadius').forEach(token => {
+    processedTokens.filter(token => token.type === 'borderRadius').forEach(token => {
       const cleanName = token.name.replace(/^global-v2-/, '');
       const className = cleanName.replace(/\./g, '-');
       css += `.rounded-${className} { border-radius: var(--${cleanName}); }\n`;
@@ -101,7 +302,7 @@ StyleDictionary.registerFormat({
 
     // Add utility classes for shadows
     css += `\n/* Shadow Utilities */\n`;
-    tokens.filter(token => token.type === 'boxShadow').forEach(token => {
+    processedTokens.filter(token => token.type === 'boxShadow').forEach(token => {
       const cleanName = token.name.replace(/^global-v2-/, '');
       const className = cleanName.replace(/\./g, '-');
       css += `.shadow-${className} { box-shadow: var(--${cleanName}); }\n`;
@@ -148,7 +349,7 @@ export default tokens;
 // Register a custom transform group
 StyleDictionary.registerTransformGroup({
   name: 'custom/css',
-  transforms: ['attribute/cti', 'name/cti/kebab', 'time/seconds', 'content/icon', 'size/rem', 'color/css']
+  transforms: ['attribute/cti', 'name/css-clean', 'time/seconds', 'content/icon', 'size/rem', 'color/css']
 });
 
 // Function to create config for specific token file
@@ -161,7 +362,7 @@ function createConfigForFile(tokenFile) {
     source: [tokenFile],
     platforms: {
       css: {
-        transformGroup: 'css',
+        transformGroup: 'custom/css',
         buildPath: `dist/css/${fileName}/`,
         files: [
           {

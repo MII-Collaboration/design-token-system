@@ -49,6 +49,34 @@ StyleDictionary.registerTransform({
   }
 });
 
+// Custom transform for typography objects
+StyleDictionary.registerTransform({
+  name: 'typography/css-shorthand',
+  type: 'value',
+  matcher: function(token) {
+    // Match any token with object value that might be typography
+    return typeof token.value === 'object' && token.value !== null && 
+           (token.type === 'typography' || token.$type === 'typography' || 
+            (token.value.fontSize && token.value.fontFamily));
+  },
+  transformer: function(token, options) {
+    const value = token.value;
+    
+    // If it's a complex typography object, extract fontSize
+    if (typeof value === 'object' && value !== null) {
+      if (value.fontSize) {
+        // Return the fontSize value directly since it should already be resolved
+        return value.fontSize;
+      }
+      
+      // Fallback: return a descriptive string instead of [object Object]
+      return `/* Typography object without fontSize */`;
+    }
+    
+    return token.value;
+  }
+});
+
 // Custom transform for clean CSS variable names
 StyleDictionary.registerTransform({
   name: 'name/css-clean',
@@ -261,7 +289,24 @@ StyleDictionary.registerFormat({
       if (tokens.length > 0) {
         css += `  /*! ${category} */\n`;
         tokens.forEach(token => {
-          css += `  --${token.name}: ${token.value};\n`;
+          let value = token.value;
+          
+          // Handle typography tokens with object values
+          if (typeof value === 'object' && value !== null) {
+            if (value.fontSize) {
+              // For typography tokens, use fontSize as the value
+              value = value.fontSize;
+              // Add px if it's a number
+              if (typeof value === 'string' && /^\d+$/.test(value)) {
+                value = value + 'px';
+              }
+            } else {
+              // For other object values, convert to string
+              value = JSON.stringify(value);
+            }
+          }
+          
+          css += `  --${token.name}: ${value};\n`;
         });
         css += `\n`;
       }
@@ -379,7 +424,7 @@ export default tokens;
 // Register a custom transform group
 StyleDictionary.registerTransformGroup({
   name: 'custom/css',
-  transforms: ['attribute/cti', 'name/css-clean', 'time/seconds', 'content/icon', 'size/pxToRem', 'color/css']
+  transforms: ['attribute/cti', 'name/css-clean', 'typography/css-shorthand', 'time/seconds', 'content/icon', 'size/pxToRem', 'color/css']
 });
 
 // Function to create config for specific token file

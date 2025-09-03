@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Sun, 17 Aug 2025 17:55:32 GMT
+ * Generated on Wed, 03 Sep 2025 17:02:35 GMT
  */
 
 export const GlobalV2PrimitivesColorRedLightest = "#ffe5e9";

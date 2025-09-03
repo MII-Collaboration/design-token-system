@@ -9,24 +9,32 @@
 
 }
 
+/* Border Radius Utilities */
+
+/* Border Size Utilities */
+
 /* Color Utilities */
-.bg-primary { background-color: var(--primary); }
+.background-primary { background-color: var(--primary); }
 .text-primary { color: var(--primary); }
-.border-primary { border-color: var(--primary); }
-.bg-secondary { background-color: var(--secondary); }
+.background-secondary { background-color: var(--secondary); }
 .text-secondary { color: var(--secondary); }
-.border-secondary { border-color: var(--secondary); }
-.bg-success { background-color: var(--success); }
+.background-success { background-color: var(--success); }
 .text-success { color: var(--success); }
-.border-success { border-color: var(--success); }
-.bg-danger { background-color: var(--danger); }
+.background-danger { background-color: var(--danger); }
 .text-danger { color: var(--danger); }
-.border-danger { border-color: var(--danger); }
 
 /* Spacing Utilities */
 
 /* Typography Utilities */
 
-/* Border Radius Utilities */
-
 /* Shadow Utilities */
+
+/* Button Utilities */
+.btn { /* Base button styles */ }
+.btn-primary { background-color: var(--color-primary-base); color: white; }
+.btn-secondary { background-color: var(--color-secondary-base); color: white; }
+.btn-cancel { background-color: var(--color-neutral-6); color: var(--color-neutral-10); }
+.btn-success { background-color: var(--color-success-base); color: white; }
+.btn-error { background-color: var(--color-error-base); color: white; }
+.btn-small { padding: var(--space-xs) var(--space-s); font-size: var(--font-size-s); }
+.btn-large { padding: var(--space-m) var(--space-l); font-size: var(--font-size-l); }

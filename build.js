@@ -38,7 +38,7 @@ StyleDictionary.registerTransform({
   name: 'size/pxToRem',
   type: 'value',
   matcher: function(token) {
-    return ['spacing', 'fontSizes', 'borderRadius', 'borderWidth'].includes(token.type) && 
+    return ['spacing', 'fontSizes'].includes(token.type) && 
            typeof token.value === 'string' && 
            token.value.endsWith('px');
   },
@@ -46,6 +46,42 @@ StyleDictionary.registerTransform({
     const val = parseFloat(token.value);
     if (isNaN(val)) return token.value;
     return `${val / 16}rem`;
+  }
+});
+
+// Custom transform for border radius (keep as px or %)
+StyleDictionary.registerTransform({
+  name: 'size/borderRadius',
+  type: 'value',
+  matcher: function(token) {
+    return token.type === 'borderRadius' && 
+           typeof token.value === 'string' && 
+           token.value.endsWith('px');
+  },
+  transformer: function(token) {
+    const val = parseFloat(token.value);
+    if (isNaN(val)) return token.value;
+    
+    // Special handling for circle (9999px becomes 100%)
+    if (val >= 9999) return '100%';
+    
+    return `${val}px`;
+  }
+});
+
+// Custom transform for border width (keep as px)
+StyleDictionary.registerTransform({
+  name: 'size/borderWidth',
+  type: 'value',
+  matcher: function(token) {
+    return token.type === 'borderWidth' && 
+           typeof token.value === 'string' && 
+           token.value.endsWith('px');
+  },
+  transformer: function(token) {
+    const val = parseFloat(token.value);
+    if (isNaN(val)) return token.value;
+    return `${val}px`;
   }
 });
 
@@ -319,69 +355,71 @@ StyleDictionary.registerFormat({
       return css;
     }
 
-    // Add utility classes for colors
-    css += `/* Color Utilities */\n`;
-    processedTokens.filter(token => token.type === 'color').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.bg-${className} { background-color: var(--${token.name}); }\n`;
-      css += `.text-${className} { color: var(--${token.name}); }\n`;
-      css += `.border-${className} { border-color: var(--${token.name}); }\n`;
+    // Generate utility classes in the expected format
+    css += `/* Border Radius Utilities */\n`;
+    processedTokens.filter(token => token.type === 'borderRadius').forEach(token => {
+      const cleanName = token.name.replace(/^border-radius-/, '');
+      css += `.border-radius-${cleanName} { border-radius: var(--${token.name}); }\n`;
     });
 
-    // Add utility classes for spacing
+    css += `\n/* Border Size Utilities */\n`;
+    processedTokens.filter(token => token.type === 'borderWidth').forEach(token => {
+      const cleanName = token.name.replace(/^border-size-/, '');
+      css += `.border-size-${cleanName} { border-width: var(--${token.name}); }\n`;
+    });
+
+    css += `\n/* Color Utilities */\n`;
+    processedTokens.filter(token => token.type === 'color').forEach(token => {
+      const className = token.name.replace(/^color-/, '');
+      css += `.background-${className} { background-color: var(--${token.name}); }\n`;
+      css += `.text-${className} { color: var(--${token.name}); }\n`;
+    });
+
     css += `\n/* Spacing Utilities */\n`;
     processedTokens.filter(token => token.type === 'spacing').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.p-${className} { padding: var(--${token.name}); }\n`;
-      css += `.pt-${className} { padding-top: var(--${token.name}); }\n`;
-      css += `.pr-${className} { padding-right: var(--${token.name}); }\n`;
-      css += `.pb-${className} { padding-bottom: var(--${token.name}); }\n`;
-      css += `.pl-${className} { padding-left: var(--${token.name}); }\n`;
-      css += `.px-${className} { padding-left: var(--${token.name}); padding-right: var(--${token.name}); }\n`;
-      css += `.py-${className} { padding-top: var(--${token.name}); padding-bottom: var(--${token.name}); }\n`;
-      css += `.m-${className} { margin: var(--${token.name}); }\n`;
-      css += `.mt-${className} { margin-top: var(--${token.name}); }\n`;
-      css += `.mr-${className} { margin-right: var(--${token.name}); }\n`;
-      css += `.mb-${className} { margin-bottom: var(--${token.name}); }\n`;
-      css += `.ml-${className} { margin-left: var(--${token.name}); }\n`;
-      css += `.mx-${className} { margin-left: var(--${token.name}); margin-right: var(--${token.name}); }\n`;
-      css += `.my-${className} { margin-top: var(--${token.name}); margin-bottom: var(--${token.name}); }\n`;
+      const className = token.name.replace(/^space-/, '');
+      css += `.padding-${className} { padding: var(--${token.name}); }\n`;
+      css += `.padding-top-${className} { padding-top: var(--${token.name}); }\n`;
+      css += `.padding-right-${className} { padding-right: var(--${token.name}); }\n`;
+      css += `.padding-bottom-${className} { padding-bottom: var(--${token.name}); }\n`;
+      css += `.padding-left-${className} { padding-left: var(--${token.name}); }\n`;
+      css += `.padding-x-${className} { padding-left: var(--${token.name}); padding-right: var(--${token.name}); }\n`;
+      css += `.padding-y-${className} { padding-top: var(--${token.name}); padding-bottom: var(--${token.name}); }\n`;
+      css += `.margin-${className} { margin: var(--${token.name}); }\n`;
+      css += `.margin-top-${className} { margin-top: var(--${token.name}); }\n`;
+      css += `.margin-right-${className} { margin-right: var(--${token.name}); }\n`;
+      css += `.margin-bottom-${className} { margin-bottom: var(--${token.name}); }\n`;
+      css += `.margin-left-${className} { margin-left: var(--${token.name}); }\n`;
+      css += `.margin-x-${className} { margin-left: var(--${token.name}); margin-right: var(--${token.name}); }\n`;
+      css += `.margin-y-${className} { margin-top: var(--${token.name}); margin-bottom: var(--${token.name}); }\n`;
     });
 
-    // Add utility classes for typography
     css += `\n/* Typography Utilities */\n`;
     processedTokens.filter(token => token.type === 'fontSizes').forEach(token => {
-      const className = token.name.replace(/\./g, '-');
-      css += `.text-${className} { font-size: var(--${token.name}); }\n`;
+      const className = token.name.replace(/^font-size-/, '');
+      css += `.font-size-${className} { font-size: var(--${token.name}); }\n`;
     });
 
     processedTokens.filter(token => token.type === 'fontWeights').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.font-${className} { font-weight: var(--${cleanName}); }\n`;
+      const cleanName = token.name.replace(/^font-/, '');
+      css += `.font-${cleanName} { font-weight: var(--${token.name}); }\n`;
     });
 
-    processedTokens.filter(token => token.type === 'lineHeights').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.leading-${className} { line-height: var(--${cleanName}); }\n`;
-    });
-
-    // Add utility classes for border radius
-    css += `\n/* Border Radius Utilities */\n`;
-    processedTokens.filter(token => token.type === 'borderRadius').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.rounded-${className} { border-radius: var(--${cleanName}); }\n`;
-    });
-
-    // Add utility classes for shadows
     css += `\n/* Shadow Utilities */\n`;
     processedTokens.filter(token => token.type === 'boxShadow').forEach(token => {
-      const cleanName = token.name.replace(/^global-v2-/, '');
-      const className = cleanName.replace(/\./g, '-');
-      css += `.shadow-${className} { box-shadow: var(--${cleanName}); }\n`;
+      const cleanName = token.name.replace(/^shadow-/, '');
+      css += `.shadow-${cleanName} { box-shadow: var(--${token.name}); }\n`;
     });
+
+    css += `\n/* Button Utilities */\n`;
+    css += `.btn { /* Base button styles */ }\n`;
+    css += `.btn-primary { background-color: var(--color-primary-base); color: white; }\n`;
+    css += `.btn-secondary { background-color: var(--color-secondary-base); color: white; }\n`;
+    css += `.btn-cancel { background-color: var(--color-neutral-6); color: var(--color-neutral-10); }\n`;
+    css += `.btn-success { background-color: var(--color-success-base); color: white; }\n`;
+    css += `.btn-error { background-color: var(--color-error-base); color: white; }\n`;
+    css += `.btn-small { padding: var(--space-xs) var(--space-s); font-size: var(--font-size-s); }\n`;
+    css += `.btn-large { padding: var(--space-m) var(--space-l); font-size: var(--font-size-l); }\n`;
 
     return css;
   }
@@ -424,7 +462,7 @@ export default tokens;
 // Register a custom transform group
 StyleDictionary.registerTransformGroup({
   name: 'custom/css',
-  transforms: ['attribute/cti', 'name/css-clean', 'typography/css-shorthand', 'time/seconds', 'content/icon', 'size/pxToRem', 'color/css']
+  transforms: ['attribute/cti', 'name/css-clean', 'typography/css-shorthand', 'time/seconds', 'content/icon', 'size/pxToRem', 'size/borderRadius', 'size/borderWidth', 'color/css']
 });
 
 // Function to create config for specific token file

@@ -131,7 +131,8 @@ StyleDictionary.registerTransform({
     
     // Simplify typography naming
     name = name.replace(/^display-/, 'font-size-display-');
-    name = name.replace(/^heading-/, 'font-size-');
+    name = name.replace(/^heading-h/, 'font-size-heading');
+    name = name.replace(/^heading-/, 'font-size-heading-');
     name = name.replace(/^body-/, 'font-size-body-');
     name = name.replace(/^label-/, 'font-size-label-');
     name = name.replace(/^caption-/, 'font-size-caption-');

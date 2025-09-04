@@ -15,18 +15,18 @@
   --font-size-display-7xl: 3.25rem;
   --font-size-display-8xl: 3.375rem;
   --font-size-display-9xl: 3.5rem;
-  --font-size-none: 0rem;
-  --font-size-h11: 1rem;
-  --font-size-h10: 1.125rem;
-  --font-size-h9: 1.25rem;
-  --font-size-h8: 1.375rem;
-  --font-size-h7: 1.5rem;
-  --font-size-h6: 1.625rem;
-  --font-size-h5: 1.75rem;
-  --font-size-h4: 1.875rem;
-  --font-size-h3: 2rem;
-  --font-size-h2: 2.125rem;
-  --font-size-h1: 2.25rem;
+  --font-size-heading-none: 0rem;
+  --font-size-heading11: 1rem;
+  --font-size-heading10: 1.125rem;
+  --font-size-heading9: 1.25rem;
+  --font-size-heading8: 1.375rem;
+  --font-size-heading7: 1.5rem;
+  --font-size-heading6: 1.625rem;
+  --font-size-heading5: 1.75rem;
+  --font-size-heading4: 1.875rem;
+  --font-size-heading3: 2rem;
+  --font-size-heading2: 2.125rem;
+  --font-size-heading1: 2.25rem;
   --font-size-body-s: 0.75rem;
   --font-size-body-m: 0.875rem;
   --font-size-body-base: 1rem;
@@ -776,18 +776,18 @@
 .font-size-display-7xl { font-size: var(--font-size-display-7xl); }
 .font-size-display-8xl { font-size: var(--font-size-display-8xl); }
 .font-size-display-9xl { font-size: var(--font-size-display-9xl); }
-.font-size-none { font-size: var(--font-size-none); }
-.font-size-h11 { font-size: var(--font-size-h11); }
-.font-size-h10 { font-size: var(--font-size-h10); }
-.font-size-h9 { font-size: var(--font-size-h9); }
-.font-size-h8 { font-size: var(--font-size-h8); }
-.font-size-h7 { font-size: var(--font-size-h7); }
-.font-size-h6 { font-size: var(--font-size-h6); }
-.font-size-h5 { font-size: var(--font-size-h5); }
-.font-size-h4 { font-size: var(--font-size-h4); }
-.font-size-h3 { font-size: var(--font-size-h3); }
-.font-size-h2 { font-size: var(--font-size-h2); }
-.font-size-h1 { font-size: var(--font-size-h1); }
+.font-size-heading-none { font-size: var(--font-size-heading-none); }
+.font-size-heading11 { font-size: var(--font-size-heading11); }
+.font-size-heading10 { font-size: var(--font-size-heading10); }
+.font-size-heading9 { font-size: var(--font-size-heading9); }
+.font-size-heading8 { font-size: var(--font-size-heading8); }
+.font-size-heading7 { font-size: var(--font-size-heading7); }
+.font-size-heading6 { font-size: var(--font-size-heading6); }
+.font-size-heading5 { font-size: var(--font-size-heading5); }
+.font-size-heading4 { font-size: var(--font-size-heading4); }
+.font-size-heading3 { font-size: var(--font-size-heading3); }
+.font-size-heading2 { font-size: var(--font-size-heading2); }
+.font-size-heading1 { font-size: var(--font-size-heading1); }
 .font-size-body-s { font-size: var(--font-size-body-s); }
 .font-size-body-m { font-size: var(--font-size-body-m); }
 .font-size-body-base { font-size: var(--font-size-body-base); }

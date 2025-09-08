@@ -2243,6 +2243,10 @@
       "yellow-background": {
         "$type": "color",
         "$value": "linear-gradient(180deg, #ffeed8 0%, #ffeed800 100%)"
+      },
+      "red-orange": {
+        "$type": "color",
+        "$value": "linear-gradient(88deg, #BB093E -0.01%, #EF1B4B 47.91%, #F4823A 100%)"
       }
     }
   },

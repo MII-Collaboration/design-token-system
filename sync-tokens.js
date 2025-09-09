@@ -13,9 +13,24 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
   // Handle W3C DTCG format with proper token set selection
   let tokenSet;
   
-  // Check for W3C DTCG format structure
+  // Check for W3C DTCG format structure and merge multiple token sets
   if (tokenStudioData.global) {
-    tokenSet = tokenStudioData.global;
+    tokenSet = { ...tokenStudioData.global };
+    
+    // Also merge global.v2 section if it exists
+    if (tokenStudioData['global.v2']) {
+      console.log('🔍 Found global.v2 section, merging with global...');
+      // Recursively merge global.v2 into tokenSet
+      Object.keys(tokenStudioData['global.v2']).forEach(key => {
+        if (tokenSet[key]) {
+          // If key exists in both, merge the objects
+          tokenSet[key] = { ...tokenSet[key], ...tokenStudioData['global.v2'][key] };
+        } else {
+          // If key doesn't exist in global, add it
+          tokenSet[key] = tokenStudioData['global.v2'][key];
+        }
+      });
+    }
   } else if (tokenStudioData.$tokens) {
     // W3C DTCG format with $tokens
     tokenSet = tokenStudioData.$tokens;

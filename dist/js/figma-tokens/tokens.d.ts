@@ -1122,6 +1122,10 @@ export interface DesignTokens {
         value: string;
         type: 'color';
       };
+      black: {
+        value: string;
+        type: 'color';
+      };
     };
     blue: {
       lightest: {

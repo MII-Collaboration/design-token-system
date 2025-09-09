@@ -1335,6 +1335,10 @@
       "darkest": {
         "value": "#660010",
         "type": "color"
+      },
+      "black": {
+        "value": "#000",
+        "type": "color"
       }
     },
     "blue": {

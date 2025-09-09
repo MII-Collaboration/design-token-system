@@ -1697,39 +1697,39 @@
         "$type": "fontSizes",
         "$value": "0"
       },
-      "h11": {
+      "heading11": {
         "$type": "fontSizes",
         "$value": "16"
       },
-      "h10": {
+      "heading10": {
         "$type": "fontSizes",
         "$value": "18"
       },
-      "h9": {
+      "heading9": {
         "$type": "fontSizes",
         "$value": "20"
       },
-      "h8": {
+      "heading8": {
         "$type": "fontSizes",
         "$value": "22"
       },
-      "h7": {
+      "heading7": {
         "$type": "fontSizes",
         "$value": "24"
       },
-      "h6": {
+      "heading6": {
         "$type": "fontSizes",
         "$value": "26"
       },
-      "h5": {
+      "heading5": {
         "$type": "fontSizes",
         "$value": "28"
       },
-      "h4": {
+      "heading4": {
         "$type": "fontSizes",
         "$value": "30"
       },
-      "h3": {
+      "heading3": {
         "$type": "fontSizes",
         "$value": "32"
       },

@@ -8,7 +8,9 @@ function preprocessTokenFile(tokenFile) {
   try {
     const content = fs.readFileSync(tokenFile, 'utf8');
     // Convert letterSpacing references from camelCase to lowercase
-    const fixedContent = content.replace(/"letterSpacing\./g, '"letterspacing.');
+    // This handles both the object property name and the references to it
+    let fixedContent = content.replace(/"letterSpacing\./g, '"letterspacing.');
+    fixedContent = fixedContent.replace(/\{letterSpacing\./g, '{letterspacing.');
     
     // Create a temporary file with fixed content
     const tempFile = tokenFile.replace('.json', '-temp.json');

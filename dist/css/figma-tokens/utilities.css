@@ -174,7 +174,7 @@
   --color-red-dark: #cc001e;
   --color-red-darker: #990017;
   --color-red-darkest: #660010;
-  --color-red-black: #000;
+  --color-red-test: #000;
   --color-blue-lightest: #e8f2ff;
   --color-blue-lighter: #80b3ff;
   --color-blue-light: #408dff;
@@ -607,8 +607,8 @@
 .text-red-darker { color: var(--color-red-darker); }
 .background-red-darkest { background-color: var(--color-red-darkest); }
 .text-red-darkest { color: var(--color-red-darkest); }
-.background-red-black { background-color: var(--color-red-black); }
-.text-red-black { color: var(--color-red-black); }
+.background-red-test { background-color: var(--color-red-test); }
+.text-red-test { color: var(--color-red-test); }
 .background-blue-lightest { background-color: var(--color-blue-lightest); }
 .text-blue-lightest { color: var(--color-blue-lightest); }
 .background-blue-lighter { background-color: var(--color-blue-lighter); }

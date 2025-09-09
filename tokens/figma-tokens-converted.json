@@ -1336,7 +1336,7 @@
         "value": "#660010",
         "type": "color"
       },
-      "black": {
+      "test": {
         "value": "#000",
         "type": "color"
       }

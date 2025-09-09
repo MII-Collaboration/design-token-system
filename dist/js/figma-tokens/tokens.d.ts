@@ -1122,7 +1122,7 @@ export interface DesignTokens {
         value: string;
         type: 'color';
       };
-      black: {
+      test: {
         value: string;
         type: 'color';
       };

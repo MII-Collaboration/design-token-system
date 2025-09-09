@@ -20,16 +20,23 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
     // Also merge global.v2 section if it exists
     if (tokenStudioData['global.v2']) {
       console.log('🔍 Found global.v2 section, merging with global...');
-      // Recursively merge global.v2 into tokenSet
-      Object.keys(tokenStudioData['global.v2']).forEach(key => {
-        if (tokenSet[key]) {
-          // If key exists in both, merge the objects
-          tokenSet[key] = { ...tokenSet[key], ...tokenStudioData['global.v2'][key] };
-        } else {
-          // If key doesn't exist in global, add it
-          tokenSet[key] = tokenStudioData['global.v2'][key];
-        }
-      });
+      // Deep merge function
+      function deepMerge(target, source) {
+        const result = { ...target };
+        Object.keys(source).forEach(key => {
+          if (source[key] && typeof source[key] === 'object' && !source[key].$value && !source[key].$type) {
+            // If it's a nested object (not a token), merge recursively
+            result[key] = deepMerge(result[key] || {}, source[key]);
+          } else {
+            // If it's a token or primitive value, replace
+            result[key] = source[key];
+          }
+        });
+        return result;
+      }
+      
+      // Deep merge global.v2 into tokenSet
+      tokenSet = deepMerge(tokenSet, tokenStudioData['global.v2']);
     }
   } else if (tokenStudioData.$tokens) {
     // W3C DTCG format with $tokens
@@ -62,8 +69,13 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
   // Helper function to fix token references in values
   function fixTokenReferences(value, rootPath = []) {
     if (typeof value === 'string' && value.includes('{') && value.includes('}')) {
-      // Handle token references like {Primitives Color.neutral.1}
+      // Handle token references like {Primitives Color.neutral.1} or {global.v2.primitives-color.neutral.2}
       return value.replace(/\{([^}]+)\}/g, (match, reference) => {
+        // If reference starts with 'global.v2', remove it since we merged everything to root
+        if (reference.startsWith('global.v2.')) {
+          reference = reference.replace('global.v2.', '');
+        }
+        
         // Split reference by dots and normalize each part
         const parts = reference.split('.');
         const normalizedParts = parts.map(part => {
@@ -74,9 +86,8 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
           return part;
         });
         
-        // Reconstruct the reference with root path (global.v2)
-        const fullPath = rootPath.concat(normalizedParts).join('.');
-        return `{${fullPath}}`;
+        // Return the normalized reference path
+        return `{${normalizedParts.join('.')}}`;
       });
     }
     return value;
@@ -100,7 +111,7 @@ function convertTokenStudioToStyleDictionary(tokenStudioData) {
         const tokenType = value.$type || value.type;
         
         // Fix token references in the value
-        tokenValue = fixTokenReferences(tokenValue, ['global', 'v2']); // Use root path for references
+        tokenValue = fixTokenReferences(tokenValue); // No need for root path since we handle it internally
         
         console.log(`📝 Processing token: ${normalizedKey} = ${tokenValue} (type: ${tokenType})`);
         

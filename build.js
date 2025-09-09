@@ -129,7 +129,8 @@ StyleDictionary.registerTransform({
     // Simplify color naming by removing redundant prefixes
     name = name.replace(/^primitives-color-/, 'color-');
     name = name.replace(/^semantics-color-/, 'color-');
-    name = name.replace(/^gradients-color-/, 'gradient-');
+    // Keep gradients-color- prefix unchanged
+    // name = name.replace(/^gradients-color-/, 'gradient-');
     
     // Simplify typography naming
     name = name.replace(/^display-/, 'font-size-display-');

@@ -87,23 +87,6 @@
   --letterspacing-1-5: 1.5;
   --letterspacing-2-5: 2.5;
 
-  /*! Color - Gradients */
-  --gradient-dark-red: linear-gradient(37deg, #b90024 5.35%, #ff0025 69.24%, #fd195e 100%);
-  --gradient-dark-blue: linear-gradient(33deg, #001a41 0%, #0e336c 100%);
-  --gradient-candy-red: linear-gradient(44deg, #cd0a45 58.4%, #fd2b77 100%);
-  --gradient-blue: linear-gradient(225deg, #073975 0%, #0450a9 55.03%);
-  --gradient-pink: linear-gradient(44deg, #eb82a2 58.4%, #fb2974 100%);
-  --gradient-yellow: linear-gradient(225deg, #d8db4b 0%, #eff189 54.38%);
-  --gradient-orange: linear-gradient(225deg, #df9330 0%, #f1ba72 51.35%);
-  --gradient-green: linear-gradient(225deg, #08b56d 0%, #3ecd92 53.96%);
-  --gradient-light-blue: linear-gradient(180deg, #cdd6e7 0%, #cdd6e700 100%);
-  --gradient-bronze: linear-gradient(33deg, #a47146 0%, #d9a274 100%);
-  --gradient-silver-1: linear-gradient(33deg, #939592 0%, #cdcdcd 100%);
-  --gradient-silver-2: linear-gradient(33deg, #576080 0%, #bac5db 100%);
-  --gradient-gold-1: linear-gradient(225deg, #eff189 31.97%, #b4b726 98.39%);
-  --gradient-gold-2: linear-gradient(244deg, #fcc40b 0%, #b8922f 98.39%);
-  --gradient-yellow-background: linear-gradient(180deg, #ffeed8 0%, #ffeed800 100%);
-
   /*! Border */
   --border-width-none: 0px;
   --border-width-1: 1px;
@@ -179,6 +162,21 @@
   --text-color-placeholder: #d9d9d9;
   --text-color-red: #ED1846;
   --text-color-blue: #3A96EC;
+  --gradients-color-dark-red: linear-gradient(37deg, #b90024 5.35%, #ff0025 69.24%, #fd195e 100%);
+  --gradients-color-dark-blue: linear-gradient(33deg, #001a41 0%, #0e336c 100%);
+  --gradients-color-candy-red: linear-gradient(44deg, #cd0a45 58.4%, #fd2b77 100%);
+  --gradients-color-blue: linear-gradient(225deg, #073975 0%, #0450a9 55.03%);
+  --gradients-color-pink: linear-gradient(44deg, #eb82a2 58.4%, #fb2974 100%);
+  --gradients-color-yellow: linear-gradient(225deg, #d8db4b 0%, #eff189 54.38%);
+  --gradients-color-orange: linear-gradient(225deg, #df9330 0%, #f1ba72 51.35%);
+  --gradients-color-green: linear-gradient(225deg, #08b56d 0%, #3ecd92 53.96%);
+  --gradients-color-light-blue: linear-gradient(180deg, #cdd6e7 0%, #cdd6e700 100%);
+  --gradients-color-bronze: linear-gradient(33deg, #a47146 0%, #d9a274 100%);
+  --gradients-color-silver-1: linear-gradient(33deg, #939592 0%, #cdcdcd 100%);
+  --gradients-color-silver-2: linear-gradient(33deg, #576080 0%, #bac5db 100%);
+  --gradients-color-gold-1: linear-gradient(225deg, #eff189 31.97%, #b4b726 98.39%);
+  --gradients-color-gold-2: linear-gradient(244deg, #fcc40b 0%, #b8922f 98.39%);
+  --gradients-color-yellow-background: linear-gradient(180deg, #ffeed8 0%, #ffeed800 100%);
   --accent-color-light-grey: #f6f3f3;
   --accent-color-dark-grey: #e9e4e4;
   --accent-color-light-mustard: #ffeed8;
@@ -281,36 +279,36 @@
 .text-text-color-red { color: var(--text-color-red); }
 .background-text-color-blue { background-color: var(--text-color-blue); }
 .text-text-color-blue { color: var(--text-color-blue); }
-.background-gradient-dark-red { background-color: var(--gradient-dark-red); }
-.text-gradient-dark-red { color: var(--gradient-dark-red); }
-.background-gradient-dark-blue { background-color: var(--gradient-dark-blue); }
-.text-gradient-dark-blue { color: var(--gradient-dark-blue); }
-.background-gradient-candy-red { background-color: var(--gradient-candy-red); }
-.text-gradient-candy-red { color: var(--gradient-candy-red); }
-.background-gradient-blue { background-color: var(--gradient-blue); }
-.text-gradient-blue { color: var(--gradient-blue); }
-.background-gradient-pink { background-color: var(--gradient-pink); }
-.text-gradient-pink { color: var(--gradient-pink); }
-.background-gradient-yellow { background-color: var(--gradient-yellow); }
-.text-gradient-yellow { color: var(--gradient-yellow); }
-.background-gradient-orange { background-color: var(--gradient-orange); }
-.text-gradient-orange { color: var(--gradient-orange); }
-.background-gradient-green { background-color: var(--gradient-green); }
-.text-gradient-green { color: var(--gradient-green); }
-.background-gradient-light-blue { background-color: var(--gradient-light-blue); }
-.text-gradient-light-blue { color: var(--gradient-light-blue); }
-.background-gradient-bronze { background-color: var(--gradient-bronze); }
-.text-gradient-bronze { color: var(--gradient-bronze); }
-.background-gradient-silver-1 { background-color: var(--gradient-silver-1); }
-.text-gradient-silver-1 { color: var(--gradient-silver-1); }
-.background-gradient-silver-2 { background-color: var(--gradient-silver-2); }
-.text-gradient-silver-2 { color: var(--gradient-silver-2); }
-.background-gradient-gold-1 { background-color: var(--gradient-gold-1); }
-.text-gradient-gold-1 { color: var(--gradient-gold-1); }
-.background-gradient-gold-2 { background-color: var(--gradient-gold-2); }
-.text-gradient-gold-2 { color: var(--gradient-gold-2); }
-.background-gradient-yellow-background { background-color: var(--gradient-yellow-background); }
-.text-gradient-yellow-background { color: var(--gradient-yellow-background); }
+.background-gradients-color-dark-red { background-color: var(--gradients-color-dark-red); }
+.text-gradients-color-dark-red { color: var(--gradients-color-dark-red); }
+.background-gradients-color-dark-blue { background-color: var(--gradients-color-dark-blue); }
+.text-gradients-color-dark-blue { color: var(--gradients-color-dark-blue); }
+.background-gradients-color-candy-red { background-color: var(--gradients-color-candy-red); }
+.text-gradients-color-candy-red { color: var(--gradients-color-candy-red); }
+.background-gradients-color-blue { background-color: var(--gradients-color-blue); }
+.text-gradients-color-blue { color: var(--gradients-color-blue); }
+.background-gradients-color-pink { background-color: var(--gradients-color-pink); }
+.text-gradients-color-pink { color: var(--gradients-color-pink); }
+.background-gradients-color-yellow { background-color: var(--gradients-color-yellow); }
+.text-gradients-color-yellow { color: var(--gradients-color-yellow); }
+.background-gradients-color-orange { background-color: var(--gradients-color-orange); }
+.text-gradients-color-orange { color: var(--gradients-color-orange); }
+.background-gradients-color-green { background-color: var(--gradients-color-green); }
+.text-gradients-color-green { color: var(--gradients-color-green); }
+.background-gradients-color-light-blue { background-color: var(--gradients-color-light-blue); }
+.text-gradients-color-light-blue { color: var(--gradients-color-light-blue); }
+.background-gradients-color-bronze { background-color: var(--gradients-color-bronze); }
+.text-gradients-color-bronze { color: var(--gradients-color-bronze); }
+.background-gradients-color-silver-1 { background-color: var(--gradients-color-silver-1); }
+.text-gradients-color-silver-1 { color: var(--gradients-color-silver-1); }
+.background-gradients-color-silver-2 { background-color: var(--gradients-color-silver-2); }
+.text-gradients-color-silver-2 { color: var(--gradients-color-silver-2); }
+.background-gradients-color-gold-1 { background-color: var(--gradients-color-gold-1); }
+.text-gradients-color-gold-1 { color: var(--gradients-color-gold-1); }
+.background-gradients-color-gold-2 { background-color: var(--gradients-color-gold-2); }
+.text-gradients-color-gold-2 { color: var(--gradients-color-gold-2); }
+.background-gradients-color-yellow-background { background-color: var(--gradients-color-yellow-background); }
+.text-gradients-color-yellow-background { color: var(--gradients-color-yellow-background); }
 .background-accent-color-light-grey { background-color: var(--accent-color-light-grey); }
 .text-accent-color-light-grey { color: var(--accent-color-light-grey); }
 .background-accent-color-dark-grey { background-color: var(--accent-color-dark-grey); }

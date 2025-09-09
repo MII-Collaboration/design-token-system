@@ -174,7 +174,6 @@
   --color-red-dark: #cc001e;
   --color-red-darker: #990017;
   --color-red-darkest: #660010;
-  --color-red-white: #ffff;
   --color-blue-lightest: #e8f2ff;
   --color-blue-lighter: #80b3ff;
   --color-blue-light: #408dff;
@@ -607,8 +606,6 @@
 .text-red-darker { color: var(--color-red-darker); }
 .background-red-darkest { background-color: var(--color-red-darkest); }
 .text-red-darkest { color: var(--color-red-darkest); }
-.background-red-white { background-color: var(--color-red-white); }
-.text-red-white { color: var(--color-red-white); }
 .background-blue-lightest { background-color: var(--color-blue-lightest); }
 .text-blue-lightest { color: var(--color-blue-lightest); }
 .background-blue-lighter { background-color: var(--color-blue-lighter); }

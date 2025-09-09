@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Tue, 09 Sep 2025 08:44:53 GMT
+ * Generated on Tue, 09 Sep 2025 08:48:53 GMT
  */
 
 export const SpacingNone = "0px";
@@ -274,7 +274,6 @@ export const PrimitivesColorRedBase = "#ff0025";
 export const PrimitivesColorRedDark = "#cc001e";
 export const PrimitivesColorRedDarker = "#990017";
 export const PrimitivesColorRedDarkest = "#660010";
-export const PrimitivesColorRedWhite = "#ffff";
 export const PrimitivesColorBlueLightest = "#e8f2ff";
 export const PrimitivesColorBlueLighter = "#80b3ff";
 export const PrimitivesColorBlueLight = "#408dff";

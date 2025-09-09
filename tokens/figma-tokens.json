@@ -1241,6 +1241,10 @@
         "darkest": {
           "$type": "color",
           "$value": "#660010"
+        },
+        "black": {
+          "$type": "color",
+          "$value": "#000"
         }
       },
       "blue": {

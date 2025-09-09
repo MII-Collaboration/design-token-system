@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Token System</title>
-    <link rel="stylesheet" href="css/global-v2/variables.css">
-    <link rel="stylesheet" href="css/global-v2/utilities.css">
+    <title>Design Token System - Figma Tokens</title>
+    <link rel="stylesheet" href="css/figma-tokens/variables.css">
+    <link rel="stylesheet" href="css/figma-tokens/utilities.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         h1 {
-            color: var(--color-primary-base);
+            color: var(--primary-color-telkomsel-red);
             text-align: center;
             margin-bottom: 40px;
         }
@@ -30,8 +30,8 @@
             margin-bottom: 40px;
         }
         .section h2 {
-            color: var(--color-secondary-base);
-            border-bottom: 2px solid var(--color-primary-base);
+            color: var(--primary-color-navy-blue);
+            border-bottom: 2px solid var(--primary-color-telkomsel-red);
             padding-bottom: 10px;
         }
         .demo-grid {
@@ -59,11 +59,11 @@
             width: 80px;
             height: 80px;
             margin: 0 auto 10px;
-            background-color: var(--color-primary-base);
+            background-color: var(--primary-color-telkomsel-red);
         }
         .spacing-demo {
-            background-color: var(--color-neutral-3);
-            border: 1px solid var(--color-neutral-6);
+            background-color: var(--primary-color-pure-white);
+            border: 1px solid var(--primary-color-navy-blue);
         }
         .typography-demo {
             text-align: left;
@@ -90,7 +90,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Design Token System</h1>
+        <h1>Design Token System - Figma Tokens</h1>
+        <p style="text-align: center; color: var(--primary-color-navy-blue); margin-bottom: 40px;">
+            Comprehensive documentation of design tokens generated from Figma
+        </p>
         
         <!-- Border Radius Section -->
         <div class="section">
@@ -103,21 +106,39 @@
                     <small>0px</small>
                 </div>
                 <div class="demo-item">
-                    <div class="border-radius-demo border-radius-soft"></div>
-                    <strong>Soft</strong><br>
-                    <code>.border-radius-soft</code><br>
+                    <div class="border-radius-demo border-radius-2"></div>
+                    <strong>2px</strong><br>
+                    <code>.border-radius-2</code><br>
+                    <small>2px</small>
+                </div>
+                <div class="demo-item">
+                    <div class="border-radius-demo border-radius-4"></div>
+                    <strong>4px</strong><br>
+                    <code>.border-radius-4</code><br>
                     <small>4px</small>
                 </div>
                 <div class="demo-item">
-                    <div class="border-radius-demo border-radius-rounded"></div>
-                    <strong>Rounded</strong><br>
-                    <code>.border-radius-rounded</code><br>
-                    <small>100px</small>
+                    <div class="border-radius-demo border-radius-6"></div>
+                    <strong>6px</strong><br>
+                    <code>.border-radius-6</code><br>
+                    <small>6px</small>
                 </div>
                 <div class="demo-item">
-                    <div class="border-radius-demo border-radius-circle"></div>
-                    <strong>Circle</strong><br>
-                    <code>.border-radius-circle</code><br>
+                    <div class="border-radius-demo border-radius-8"></div>
+                    <strong>8px</strong><br>
+                    <code>.border-radius-8</code><br>
+                    <small>8px</small>
+                </div>
+                <div class="demo-item">
+                    <div class="border-radius-demo border-radius-10"></div>
+                    <strong>10px</strong><br>
+                    <code>.border-radius-10</code><br>
+                    <small>10px</small>
+                </div>
+                <div class="demo-item">
+                    <div class="border-radius-demo border-radius-pill"></div>
+                    <strong>Pill</strong><br>
+                    <code>.border-radius-pill</code><br>
                     <small>100%</small>
                 </div>
             </div>
@@ -125,34 +146,55 @@
 
         <!-- Border Size Section -->
         <div class="section">
-            <h2>Border Size</h2>
+            <h2>Border Width</h2>
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div style="border: var(--border-size-none) solid var(--color-primary-base); padding: 10px;">
+                    <div style="border: var(--border-width-none) solid var(--primary-color-telkomsel-red); padding: 10px;">
                         <strong>None</strong><br>
-                        <code>.border-size-none</code><br>
+                        <code>--border-width-none</code><br>
                         <small>0px</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div style="border: var(--border-size-s) solid var(--color-primary-base); padding: 10px;">
-                        <strong>S</strong><br>
-                        <code>.border-size-s</code><br>
+                    <div style="border: var(--border-width-1) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>1px</strong><br>
+                        <code>--border-width-1</code><br>
                         <small>1px</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div style="border: var(--border-size-m) solid var(--color-primary-base); padding: 10px;">
-                        <strong>M</strong><br>
-                        <code>.border-size-m</code><br>
+                    <div style="border: var(--border-width-2) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>2px</strong><br>
+                        <code>--border-width-2</code><br>
                         <small>2px</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div style="border: var(--border-size-l) solid var(--color-primary-base); padding: 10px;">
-                        <strong>L</strong><br>
-                        <code>.border-size-l</code><br>
+                    <div style="border: var(--border-width-3) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>3px</strong><br>
+                        <code>--border-width-3</code><br>
                         <small>3px</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div style="border: var(--border-width-4) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>4px</strong><br>
+                        <code>--border-width-4</code><br>
+                        <small>4px</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div style="border: var(--border-width-5) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>5px</strong><br>
+                        <code>--border-width-5</code><br>
+                        <small>5px</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div style="border: var(--border-width-6) solid var(--primary-color-telkomsel-red); padding: 10px;">
+                        <strong>6px</strong><br>
+                        <code>--border-width-6</code><br>
+                        <small>6px</small>
                     </div>
                 </div>
             </div>
@@ -160,27 +202,27 @@
 
         <!-- Colors Section -->
         <div class="section">
-            <h2>Colors</h2>
+            <h2>Primary Colors</h2>
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div class="color-demo background-primary-base">Primary Base</div>
-                    <code>.background-primary-base</code><br>
-                    <code>.text-primary-base</code>
+                    <div class="color-demo background-primary-color-navy-blue">Navy Blue</div>
+                    <code>--primary-color-navy-blue</code><br>
+                    <small>#001a41</small>
                 </div>
                 <div class="demo-item">
-                    <div class="color-demo background-secondary-base">Secondary Base</div>
-                    <code>.background-secondary-base</code><br>
-                    <code>.text-secondary-base</code>
+                    <div class="color-demo background-primary-color-accessible-red">Accessible Red</div>
+                    <code>--primary-color-accessible-red</code><br>
+                    <small>#ed0226</small>
                 </div>
                 <div class="demo-item">
-                    <div class="color-demo background-neutral-0" style="color: var(--color-neutral-10);">Neutral 0</div>
-                    <code>.background-neutral-0</code><br>
-                    <code>.text-neutral-0</code>
+                    <div class="color-demo background-primary-color-telkomsel-red">Telkomsel Red</div>
+                    <code>--primary-color-telkomsel-red</code><br>
+                    <small>#ff0025</small>
                 </div>
                 <div class="demo-item">
-                    <div class="color-demo background-neutral-10">Neutral 10</div>
-                    <code>.background-neutral-10</code><br>
-                    <code>.text-neutral-10</code>
+                    <div class="color-demo background-primary-color-pure-white" style="color: var(--primary-color-navy-blue); border: 1px solid #ddd;">Pure White</div>
+                    <code>--primary-color-pure-white</code><br>
+                    <small>#ffffff</small>
                 </div>
             </div>
         </div>
@@ -190,31 +232,52 @@
             <h2>Spacing</h2>
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div class="spacing-demo padding-none">
+                    <div class="spacing-demo padding-spacing-none">
                         <strong>None</strong><br>
-                        <code>.padding-none</code><br>
+                        <code>--spacing-none</code><br>
                         <small>0rem</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="spacing-demo padding-xs">
-                        <strong>XS</strong><br>
-                        <code>.padding-xs</code><br>
+                    <div class="spacing-demo padding-spacing-2">
+                        <strong>2px</strong><br>
+                        <code>--spacing-2</code><br>
+                        <small>0.125rem</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="spacing-demo padding-spacing-4">
+                        <strong>4px</strong><br>
+                        <code>--spacing-4</code><br>
                         <small>0.25rem</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="spacing-demo padding-s">
-                        <strong>S</strong><br>
-                        <code>.padding-s</code><br>
+                    <div class="spacing-demo padding-spacing-8">
+                        <strong>8px</strong><br>
+                        <code>--spacing-8</code><br>
                         <small>0.5rem</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="spacing-demo padding-base">
-                        <strong>Base</strong><br>
-                        <code>.padding-base</code><br>
-                        <small>0.875rem</small>
+                    <div class="spacing-demo padding-spacing-16">
+                        <strong>16px</strong><br>
+                        <code>--spacing-16</code><br>
+                        <small>1rem</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="spacing-demo padding-spacing-24">
+                        <strong>24px</strong><br>
+                        <code>--spacing-24</code><br>
+                        <small>1.5rem</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="spacing-demo padding-spacing-32">
+                        <strong>32px</strong><br>
+                        <code>--spacing-32</code><br>
+                        <small>2rem</small>
                     </div>
                 </div>
             </div>
@@ -222,81 +285,192 @@
 
         <!-- Typography Section -->
         <div class="section">
-            <h2>Typography</h2>
+            <h2>Typography - Font Sizes</h2>
             <div class="demo-grid">
                 <div class="demo-item typography-demo">
-                    <div class="font-size-display-base">Display</div>
-                    <code>.font-size-display-base</code><br>
-                    <small>36px</small>
+                    <div style="font-size: var(--font-size-display-56);">Display XL</div>
+                    <code>--font-size-display-56</code><br>
+                    <small>3.5rem (56px)</small>
                 </div>
                 <div class="demo-item typography-demo">
-                    <div class="font-size-heading1">Heading 1</div>
-                    <code>.font-size-heading1</code><br>
-                    <small>36px</small>
+                    <div style="font-size: var(--font-size-display-36);">Display L</div>
+                    <code>--font-size-display-36</code><br>
+                    <small>2.25rem (36px)</small>
                 </div>
                 <div class="demo-item typography-demo">
-                    <div class="font-size-body-base">Body</div>
-                    <code>.font-size-body-base</code><br>
-                    <small>16px</small>
+                    <div style="font-size: var(--font-size-heading-28);">Heading L</div>
+                    <code>--font-size-heading-28</code><br>
+                    <small>1.75rem (28px)</small>
                 </div>
                 <div class="demo-item typography-demo">
-                    <div class="font-size-label-base">Label</div>
-                    <code>.font-size-label-base</code><br>
-                    <small>16px</small>
+                    <div style="font-size: var(--font-size-heading-20);">Heading M</div>
+                    <code>--font-size-heading-20</code><br>
+                    <small>1.25rem (20px)</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-size: var(--font-size-body-16);">Body L</div>
+                    <code>--font-size-body-16</code><br>
+                    <small>1rem (16px)</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-size: var(--font-size-body-14);">Body M</div>
+                    <code>--font-size-body-14</code><br>
+                    <small>0.875rem (14px)</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-size: var(--font-size-label-12);">Label</div>
+                    <code>--font-size-label-12</code><br>
+                    <small>0.75rem (12px)</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-size: var(--font-size-caption-10);">Caption</div>
+                    <code>--font-size-caption-10</code><br>
+                    <small>0.625rem (10px)</small>
                 </div>
             </div>
         </div>
 
         <!-- Shadows Section -->
         <div class="section">
-            <h2>Shadows</h2>
+            <h2>Shadows (Elevation)</h2>
             <div class="demo-grid">
                 <div class="demo-item">
-                    <div class="shadow-demo shadow-none">
-                        <strong>None</strong><br>
-                        <code>.shadow-none</code>
+                    <div class="shadow-demo" style="box-shadow: var(--0dp);">
+                        <strong>0dp</strong><br>
+                        <code>--0dp</code><br>
+                        <small>No shadow</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="shadow-demo shadow-xs">
-                        <strong>XS</strong><br>
-                        <code>.shadow-xs</code>
+                    <div class="shadow-demo" style="box-shadow: var(--1dp);">
+                        <strong>1dp</strong><br>
+                        <code>--1dp</code><br>
+                        <small>Subtle shadow</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="shadow-demo shadow-s">
-                        <strong>S</strong><br>
-                        <code>.shadow-s</code>
+                    <div class="shadow-demo" style="box-shadow: var(--2dp);">
+                        <strong>2dp</strong><br>
+                        <code>--2dp</code><br>
+                        <small>Light shadow</small>
                     </div>
                 </div>
                 <div class="demo-item">
-                    <div class="shadow-demo shadow-m">
-                        <strong>M</strong><br>
-                        <code>.shadow-m</code>
+                    <div class="shadow-demo" style="box-shadow: var(--4dp);">
+                        <strong>4dp</strong><br>
+                        <code>--4dp</code><br>
+                        <small>Medium shadow</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="shadow-demo" style="box-shadow: var(--8dp);">
+                        <strong>8dp</strong><br>
+                        <code>--8dp</code><br>
+                        <small>Strong shadow</small>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="shadow-demo" style="box-shadow: var(--16dp);">
+                        <strong>16dp</strong><br>
+                        <code>--16dp</code><br>
+                        <small>Heavy shadow</small>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Buttons Section -->
+        <!-- Font Weights Section -->
         <div class="section">
-            <h2>Buttons</h2>
+            <h2>Font Weights</h2>
+            <div class="demo-grid">
+                <div class="demo-item typography-demo">
+                    <div style="font-weight: var(--poppins-light); font-size: var(--font-size-body-16);">Light Weight</div>
+                    <code>--poppins-light</code><br>
+                    <small>Light</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-weight: var(--poppins-regular); font-size: var(--font-size-body-16);">Regular Weight</div>
+                    <code>--poppins-regular</code><br>
+                    <small>Regular</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-weight: var(--poppins-semibold); font-size: var(--font-size-body-16);">SemiBold Weight</div>
+                    <code>--poppins-semibold</code><br>
+                    <small>SemiBold</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-weight: var(--poppins-bold); font-size: var(--font-size-body-16);">Bold Weight</div>
+                    <code>--poppins-bold</code><br>
+                    <small>Bold</small>
+                </div>
+                <div class="demo-item typography-demo">
+                    <div style="font-weight: var(--telkomsel-batik-sans-bold); font-size: var(--font-size-body-16);">Telkomsel Bold</div>
+                    <code>--telkomsel-batik-sans-bold</code><br>
+                    <small>Bold</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Component Examples Section -->
+        <div class="section">
+            <h2>Component Examples</h2>
             <div class="demo-grid">
                 <div class="demo-item">
-                    <button class="btn btn-primary">Primary</button><br>
-                    <code>.btn .btn-primary</code>
+                    <button style="
+                        background-color: var(--primary-color-telkomsel-red);
+                        color: var(--primary-color-pure-white);
+                        border: none;
+                        padding: var(--spacing-12) var(--spacing-24);
+                        border-radius: var(--border-radius-4);
+                        font-size: var(--font-size-body-14);
+                        font-weight: var(--poppins-semibold);
+                        box-shadow: var(--2dp);
+                        cursor: pointer;
+                    ">Primary Button</button><br>
+                    <small>Using Telkomsel Red</small>
                 </div>
                 <div class="demo-item">
-                    <button class="btn btn-secondary">Secondary</button><br>
-                    <code>.btn .btn-secondary</code>
+                    <button style="
+                        background-color: var(--primary-color-pure-white);
+                        color: var(--primary-color-telkomsel-red);
+                        border: var(--border-width-1) solid var(--primary-color-telkomsel-red);
+                        padding: var(--spacing-12) var(--spacing-24);
+                        border-radius: var(--border-radius-4);
+                        font-size: var(--font-size-body-14);
+                        font-weight: var(--poppins-semibold);
+                        box-shadow: var(--1dp);
+                        cursor: pointer;
+                    ">Secondary Button</button><br>
+                    <small>Outlined style</small>
                 </div>
                 <div class="demo-item">
-                    <button class="btn btn-success">Success</button><br>
-                    <code>.btn .btn-success</code>
+                    <div style="
+                        background-color: var(--primary-color-pure-white);
+                        border: var(--border-width-1) solid var(--primary-color-navy-blue);
+                        border-radius: var(--border-radius-8);
+                        padding: var(--spacing-16);
+                        box-shadow: var(--4dp);
+                    ">
+                        <h4 style="margin: 0 0 var(--spacing-8) 0; color: var(--primary-color-navy-blue);">Card Component</h4>
+                        <p style="margin: 0; font-size: var(--font-size-body-14); color: var(--primary-color-navy-blue);">
+                            Example card using design tokens
+                        </p>
+                    </div>
                 </div>
                 <div class="demo-item">
-                    <button class="btn btn-error">Error</button><br>
-                    <code>.btn .btn-error</code>
+                    <div style="
+                        background: linear-gradient(135deg, var(--primary-color-telkomsel-red), var(--primary-color-accessible-red));
+                        color: var(--primary-color-pure-white);
+                        border-radius: var(--border-radius-10);
+                        padding: var(--spacing-20);
+                        box-shadow: var(--8dp);
+                        text-align: center;
+                    ">
+                        <h4 style="margin: 0 0 var(--spacing-8) 0; font-size: var(--font-size-heading-18);">Gradient Card</h4>
+                        <p style="margin: 0; font-size: var(--font-size-body-12);">
+                            Telkomsel brand gradient
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
